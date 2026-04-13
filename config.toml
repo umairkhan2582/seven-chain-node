@@ -1,4 +1,4 @@
-# Seven Chain Node Configuration — Chain ID 7777
+# Seven Chain Node Configuration — Chain ID 70007
 # Used with: bsc --config config.toml
 # Replace placeholder values marked with REPLACE_ME before deploying.
 #
@@ -9,7 +9,7 @@
 #   - P2P discovery open on :30303 for validator peering
 
 [Eth]
-NetworkId = 7777
+NetworkId = 70007
 SyncMode = "full"
 DatabaseHandles = 1024
 DatabaseCache = 1024
