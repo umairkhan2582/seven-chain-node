@@ -21,7 +21,7 @@ fi
 echo "Starting Seven Chain validator node..."
 echo "  Validator: ${VALIDATOR_ADDRESS}"
 echo "  Data dir : ${DATA_DIR}"
-echo "  Chain ID : 7777"
+echo "  Chain ID : 70007"
 echo "  Bootnode : ${BOOTNODE_ENODE}"
 echo ""
 
@@ -32,6 +32,6 @@ bsc \
   --password /etc/seven-chain/keystore.pass \
   --mine \
   --bootnodes "${BOOTNODE_ENODE}" \
-  --networkid 7777 \
+  --networkid 70007 \
   --verbosity 3 \
   2>&1 | tee -a "${LOG_DIR}/seven-chain.log"
