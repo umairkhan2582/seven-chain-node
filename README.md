@@ -1,6 +1,6 @@
 # Seven Chain — Validator Node
 
-**Chain ID: 7777 | EVM-Compatible | BSC Fork | Parlia Consensus**
+**Chain ID: 70007 | EVM-Compatible | BSC Fork | Parlia Consensus**
 
 The Seven Chain is the public settlement ledger for [TheSeven.meme](https://theseven.meme) perpetual futures platform. Every trade open, close, liquidation, and profit payout is written as an immutable transaction on this chain.
 
@@ -18,7 +18,7 @@ Apply to run a validator node: [theseven.meme/become-validator](https://theseven
                                │ JSON-RPC
                                ▼
      ┌─────────────────────────────────────────────────┐
-     │            Seven Chain (Chain ID: 7777)          │
+     │            Seven Chain (Chain ID: 70007)          │
      │                                                   │
      │  ┌──────────┐  ┌──────────┐  ┌──────────┐       │
      │  │ Node 1   │  │ Node 2   │  │ Node 3   │       │
@@ -141,7 +141,7 @@ The platform will automatically detect the real RPC and use it for:
 
 | Parameter | Value |
 |---|---|
-| Chain ID | 7777 |
+| Chain ID | 70007 |
 | Network Name | Seven Chain Testnet |
 | Currency Symbol | tBNB (testnet) |
 | Block Time | 3 seconds |
@@ -157,7 +157,7 @@ The platform will automatically detect the real RPC and use it for:
 2. Enter:
    - Network Name: `Seven Chain Testnet`
    - RPC URL: `https://rpc-testnet.theseven.meme`
-   - Chain ID: `7777`
+   - Chain ID: `70007`
    - Currency Symbol: `tBNB`
    - Explorer URL: `https://theseven.meme/blockchain/explorer`
 
@@ -260,7 +260,7 @@ Minimum requirements: Ubuntu 22.04 LTS, 2 vCPU, 2 GB RAM, 60 GB SSD.
 ## Roadmap
 
 - [x] Phase 1: Internal DB ledger (production)
-- [x] Phase 2: Seven Chain Testnet — **Live** (Chain ID 7777, 3 validator nodes)
+- [x] Phase 2: Seven Chain Testnet — **Live** (Chain ID 70007, 3 validator nodes)
 - [ ] Phase 3: Public validator onboarding + staking contracts
 - [ ] Phase 4: Mainnet with SEVEN/USDT as native gas token
 
