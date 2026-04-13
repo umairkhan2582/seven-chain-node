@@ -1,0 +1,16 @@
+{
+  "name": "seven-chain-node",
+  "version": "1.0.0",
+  "description": "Seven Chain Testnet — validator node setup for Chain ID 7777 (BSC fork, Parlia consensus)",
+  "private": true,
+  "scripts": {
+    "generate-keys": "node scripts/generate-keys.js",
+    "build-extradata": "node scripts/build-extradata.js"
+  },
+  "dependencies": {
+    "ethers": "^6.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

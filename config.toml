@@ -1,0 +1,99 @@
+# Seven Chain Node Configuration — Chain ID 7777
+# Used with: bsc --config config.toml
+# Replace placeholder values marked with REPLACE_ME before deploying.
+#
+# Security model:
+#   - HTTPModules on 0.0.0.0 (public RPC): eth, net, web3 only — NO debug/txpool
+#   - WSModules on 0.0.0.0 (public WS):    eth, net, web3 only
+#   - debug and txpool modules available ONLY on 127.0.0.1:8546 (internal management port)
+#   - P2P discovery open on :30303 for validator peering
+
+[Eth]
+NetworkId = 7777
+SyncMode = "full"
+DatabaseHandles = 1024
+DatabaseCache = 1024
+TrieCleanCache = 256
+TrieCleanCacheJournal = "triecache"
+TrieCleanCacheRejournal = 3600000000000
+TrieDirtyCache = 256
+TrieTimeout = 3600000000000
+SnapshotCache = 256
+Preimages = false
+EnablePreimageRecording = false
+EWASMInterpreter = ""
+EVMInterpreter = ""
+
+[Eth.Miner]
+GasFloor = 8000000
+GasCeil  = 8000000
+GasPrice = 1000000000
+Recommit = 3000000000
+Noverify = false
+
+[Eth.TxPool]
+Locals        = []
+NoLocals      = false
+Journal       = "transactions.rlp"
+Rejournal     = 3600000000000
+PriceLimit    = 1000000000
+PriceBump     = 10
+AccountSlots  = 16
+GlobalSlots   = 16384
+AccountQueue  = 64
+GlobalQueue   = 1024
+Lifetime      = 10800000000000
+
+[Eth.GPO]
+Blocks           = 20
+Percentile       = 60
+MaxHeaderHistory = 1024
+MaxBlockHistory  = 1024
+MaxPrice         = 5000000000000
+IgnorePrice      = 2
+
+# ── Public RPC (internet-facing) ──────────────────────────────────────────────
+# Exposes only safe read-only methods. Nginx (setup-nginx.sh) sits in front
+# with TLS termination and rate limiting.
+[Node]
+DataDir                = "/data/seven-chain"
+InsecureUnlockAllowed  = false
+NoUSB                  = true
+IPCPath                = "geth.ipc"
+HTTPHost               = "127.0.0.1"
+HTTPPort               = 8545
+HTTPCors               = ["*"]
+HTTPVirtualHosts       = ["localhost", "rpc-testnet.theseven.meme"]
+HTTPModules            = ["eth", "net", "web3"]
+
+# ── Public WebSocket (internet-facing) ────────────────────────────────────────
+WSHost    = "127.0.0.1"
+WSPort    = 8546
+WSOrigins = ["*"]
+WSModules = ["eth", "net", "web3"]
+
+GraphQLCors         = ["*"]
+GraphQLVirtualHosts = ["localhost"]
+
+[Node.HTTPTimeouts]
+ReadTimeout  = 30000000000
+WriteTimeout = 30000000000
+IdleTimeout  = 120000000000
+
+[Node.P2P]
+MaxPeers       = 50
+NoDiscovery    = false
+ListenAddr     = ":30303"
+EnableMsgEvents = false
+
+[Node.LogConfig]
+FileRoot     = "/data/seven-chain/logs"
+FilePath     = "seven-chain.log"
+MaxBytesSize = 10485760
+Level        = "info"
+
+# ── Internal Management RPC (localhost-only, NOT exposed externally) ───────────
+# Accessible after ssh into the node via: curl http://127.0.0.1:8547/...
+# Expose debug/txpool/parlia ONLY on this loopback port.
+# To add a separate management server, start a second bsc process with --http.port 8547
+# and --http.addr 127.0.0.1 --http.api eth,net,debug,txpool,parlia

@@ -1,0 +1,101 @@
+version: '3.8'
+
+# Seven Chain — 3-Node Testnet via Docker Compose
+# For development/testing. For production use install.sh on bare droplets.
+
+services:
+  bootnode:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: seven-chain-bootnode
+    ports:
+      - "30303:30303"
+      - "30303:30303/udp"
+    environment:
+      VALIDATOR_ADDRESS: "${VALIDATOR_1_ADDRESS}"
+      # Bootnode does not connect to another bootnode — it IS the bootnode.
+      # Set BOOTNODE_KEY in .env (hex private key); validators derive the enode automatically.
+    volumes:
+      - bootnode-data:/data/seven-chain
+      - ./secrets/validator1.pass:/run/secrets/keystore_pass:ro
+    networks:
+      seven-net:
+        ipv4_address: 172.20.0.10
+    restart: unless-stopped
+
+  validator-1:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: seven-chain-validator-1
+    ports:
+      - "8545:8545"
+      - "8546:8546"
+    environment:
+      VALIDATOR_ADDRESS: "${VALIDATOR_1_ADDRESS}"
+      BOOTNODE_ENODE: "enode://${BOOTNODE_KEY}@172.20.0.10:30303"
+    volumes:
+      - validator1-data:/data/seven-chain
+      - ./secrets/validator1.pass:/run/secrets/keystore_pass:ro
+    networks:
+      seven-net:
+        ipv4_address: 172.20.0.11
+    depends_on:
+      - bootnode
+    restart: unless-stopped
+
+  validator-2:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: seven-chain-validator-2
+    ports:
+      - "8547:8545"
+      - "8548:8546"
+    environment:
+      VALIDATOR_ADDRESS: "${VALIDATOR_2_ADDRESS}"
+      BOOTNODE_ENODE: "enode://${BOOTNODE_KEY}@172.20.0.10:30303"
+    volumes:
+      - validator2-data:/data/seven-chain
+      - ./secrets/validator2.pass:/run/secrets/keystore_pass:ro
+    networks:
+      seven-net:
+        ipv4_address: 172.20.0.12
+    depends_on:
+      - bootnode
+    restart: unless-stopped
+
+  validator-3:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: seven-chain-validator-3
+    ports:
+      - "8549:8545"
+      - "8550:8546"
+    environment:
+      VALIDATOR_ADDRESS: "${VALIDATOR_3_ADDRESS}"
+      BOOTNODE_ENODE: "enode://${BOOTNODE_KEY}@172.20.0.10:30303"
+    volumes:
+      - validator3-data:/data/seven-chain
+      - ./secrets/validator3.pass:/run/secrets/keystore_pass:ro
+    networks:
+      seven-net:
+        ipv4_address: 172.20.0.13
+    depends_on:
+      - bootnode
+    restart: unless-stopped
+
+volumes:
+  bootnode-data:
+  validator1-data:
+  validator2-data:
+  validator3-data:
+
+networks:
+  seven-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24

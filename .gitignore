@@ -1,0 +1,22 @@
+# Private keys and secrets — NEVER commit these
+*.key
+*.pass
+*.pem
+*.p12
+validator.env
+keystore/
+secrets/
+.env
+.env.*
+
+# Node data
+/data/
+*.log
+
+# Build artifacts
+node_modules/
+dist/
+
+# OS files
+.DS_Store
+Thumbs.db
