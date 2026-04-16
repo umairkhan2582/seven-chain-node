@@ -19,7 +19,7 @@ SERVICE_USER="seven"
 echo ""
 echo "╔══════════════════════════════════════════════════════════╗"
 echo "║         Seven Chain Validator Node Installer             ║"
-echo "║         Chain ID: 7777 — BSC Fork (Parlia PoA)          ║"
+echo "║         Chain ID: 70007 — BSC Fork (Parlia PoA)         ║"
 echo "╚══════════════════════════════════════════════════════════╝"
 echo ""
 
@@ -82,7 +82,7 @@ echo "  Firewall configured."
 echo "[8/8] Creating systemd service..."
 cat > /etc/systemd/system/seven-chain.service << EOF
 [Unit]
-Description=Seven Chain Validator Node (Chain ID 7777)
+Description=Seven Chain Validator Node (Chain ID 70007)
 After=network.target
 Wants=network-online.target
 
@@ -99,7 +99,7 @@ ExecStart=/usr/local/bin/bsc \\
   --password /etc/seven-chain/keystore.pass \\
   --mine \\
   --bootnodes \${BOOTNODE_ENODE} \\
-  --networkid 7777
+  --networkid 70007
 Restart=on-failure
 RestartSec=10
 LimitNOFILE=65536
