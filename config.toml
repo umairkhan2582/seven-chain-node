@@ -63,7 +63,7 @@ IPCPath                = "geth.ipc"
 HTTPHost               = "127.0.0.1"
 HTTPPort               = 8545
 HTTPCors               = ["*"]
-HTTPVirtualHosts       = ["localhost", "rpc-testnet.theseven.meme"]
+HTTPVirtualHosts       = ["localhost", "node.theseven.meme", "*"]
 HTTPModules            = ["eth", "net", "web3"]
 
 # ── Public WebSocket (internet-facing) ────────────────────────────────────────
