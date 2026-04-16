@@ -27,7 +27,7 @@ Apply to run a validator node: [theseven.meme/become-validator](https://theseven
      │  └────┬─────┘  └──────────┘  └──────────┘       │
      │       │ Public RPC (Nginx + SSL)                  │
      │       ▼                                           │
-     │  https://theseven.meme/api/seven-chain/jsonrpc   │
+     │  https://theseven.meme/api/seven-chain/jsonrpc                           │
      └─────────────────────────────────────────────────┘
 ```
 
@@ -107,7 +107,7 @@ nano /etc/seven-chain/validator.env
 ### Step 5: Set Up Public RPC (on Node 1 only)
 
 ```bash
-bash scripts/setup-nginx.sh rpc.theseven.meme admin@theseven.meme
+bash scripts/setup-nginx.sh your-node.example.com admin@theseven.meme
 ```
 
 This configures Nginx with SSL, rate limiting (50 req/s per IP), and CORS for public access.
