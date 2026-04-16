@@ -27,7 +27,7 @@ Apply to run a validator node: [theseven.meme/become-validator](https://theseven
      │  └────┬─────┘  └──────────┘  └──────────┘       │
      │       │ Public RPC (Nginx + SSL)                  │
      │       ▼                                           │
-     │  rpc.theseven.meme:443                           │
+     │  https://theseven.meme/api/seven-chain/jsonrpc   │
      └─────────────────────────────────────────────────┘
 ```
 
@@ -128,7 +128,7 @@ bash scripts/healthcheck.sh
 Set the following environment variable in your deployment:
 
 ```bash
-SEVEN_CHAIN_RPC_URL=https://rpc.theseven.meme
+SEVEN_CHAIN_RPC_URL=https://theseven.meme/api/seven-chain/jsonrpc
 ```
 
 Or register your node at [theseven.meme/become-validator](https://theseven.meme/become-validator) and the platform will auto-detect it via the health monitor.
