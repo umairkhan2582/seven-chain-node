@@ -42,5 +42,5 @@ CMD ["bsc \
   --password /run/secrets/keystore_pass \
   --mine \
   --bootnodes ${BOOTNODE_ENODE} \
-  --networkid 7777 \
+  --networkid 70007 \
   --verbosity 3"]
