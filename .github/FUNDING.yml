@@ -1,0 +1,33 @@
+# ──────────────────────────────────────────────────────────────
+# Seven Chain — GitHub Sponsors / Funding Configuration
+# https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/displaying-a-sponsor-button-in-your-repository
+# ──────────────────────────────────────────────────────────────
+
+# GitHub Sponsors (set up at https://github.com/sponsors)
+# github: umairkhan2582
+
+# Ko-fi — one-click coffee donations
+# ko_fi: thesevenmeme
+
+# Patreon — recurring support
+# patreon: thesevenmeme
+
+# Buy Me a Coffee
+# buy_me_a_coffee: thesevenmeme
+
+# ── Custom links (up to 4) ──────────────────────────────────
+# These appear as "Fund this project" buttons on the repo page.
+custom:
+  # Trade on the platform — the best way to support Seven Chain
+  - https://theseven.meme
+
+  # Run a validator node and earn SEVEN rewards
+  - https://theseven.meme/become-validator
+
+  # Donate SEVEN / BNB / ETH to the platform treasury wallet
+  # Seven Chain address: 0x8C3dD47aD666D4D28607F8a63A6678f78e98A4B2
+  - https://theseven.meme/blockchain/explorer/address/0x8C3dD47aD666D4D28607F8a63A6678f78e98A4B2
+
+  # Download the Android app
+  - https://theseven.meme/api/download/apk
+
