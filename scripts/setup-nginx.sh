@@ -1,13 +1,13 @@
 #!/bin/bash
 # ================================================================
 # Seven Chain — Nginx RPC Proxy Setup with SSL
-# Usage: bash scripts/setup-nginx.sh rpc-testnet.theseven.meme
-# Must be run on the RPC node (not validators directly)
+# Usage: bash scripts/setup-nginx.sh your-node.example.com
+# Replace with your own domain pointing to this server.
 # ================================================================
 
 set -euo pipefail
 
-DOMAIN="${1:-rpc-testnet.theseven.meme}"
+DOMAIN="${1:-node.theseven.meme}"
 EMAIL="${2:-admin@theseven.meme}"
 NGINX_CONF="/etc/nginx/sites-available/seven-chain-rpc"
 
