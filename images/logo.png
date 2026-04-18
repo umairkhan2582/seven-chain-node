@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Blocking theme script — must be first to prevent flash of wrong theme -->
+    <script>
+      (function() {
+        var stored = localStorage.getItem('seven-theme-v5');
+        var theme = stored || 'dark';
+        if (theme === 'system') {
+          theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.classList.remove('light', 'dark');
+        document.documentElement.classList.add(theme);
+      })();
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+
+    <!-- Google Site Verification -->
+    <meta name="google-site-verification" content="byq9MltK6MTbYOJbczxpOz5UDla7-0DVhN22mnNTPzQ" />
+
+    <!-- Primary Meta Tags -->
+    <title>TheSeven.meme — Cryptocurrency Futures Trading Platform 2026 | BTC ETH DOGE PEPE BOME | Up to 2001× Leverage</title>
+    <meta name="description" content="Trade cryptocurrency futures 2026 on TheSeven.meme — world's first on-chain immutable perpetual futures exchange. Bitcoin futures, Ethereum futures, DOGE, PEPE, BOME and 100+ crypto pairs. Up to 2001× leverage, no KYC, instant execution on BSC & Ethereum." />
+    <meta name="keywords" content="cryptocurrency futures trading 2026, crypto futures trading, future trading platform, BTC futures 2026, ETH futures contract, DOGE futures, PEPE futures, BOME futures, perpetual futures, perpetual contracts, high leverage crypto, bitcoin futures trading, meme coin futures, altcoin futures 2026, crypto derivatives, SOL futures, BONK futures, WIF futures, long short crypto, on-chain futures exchange, TheSeven meme" />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="The Seven" />
+    <meta name="theme-color" content="#FFD700" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate icon" href="/favicon.svg" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://theseven.meme/" />
+    <meta property="og:title" content="TheSeven.meme — Cryptocurrency Futures Trading 2026 | 100+ Pairs Up to 2001× Leverage" />
+    <meta property="og:description" content="Trade cryptocurrency futures 2026 — BTC, ETH, DOGE, PEPE, BOME and 100+ perpetual contracts. World's first on-chain immutable futures exchange. Up to 2001× leverage, instant execution, no KYC." />
+    <meta property="og:image" content="/opengraph.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content="The Seven" />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@TheSevenMeme" />
+    <meta name="twitter:title" content="TheSeven.meme — Cryptocurrency Futures Trading 2026 | 100+ Pairs | Up to 2001× Leverage" />
+    <meta name="twitter:description" content="Trade cryptocurrency futures 2026 — BTC, ETH, DOGE, PEPE, BOME, BONK, WIF and 100+ perpetual contracts. Up to 2001× leverage, no KYC, instant execution." />
+    <meta name="twitter:image" content="/opengraph.jpg" />
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://theseven.meme/" />
+
+    <!-- ═══════════════════════════════════════════════════════════
+         STRUCTURED DATA — EEAT & RICH RESULTS
+         ═══════════════════════════════════════════════════════════ -->
+
+    <!-- 1. Organization (EEAT) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FinancialService",
+      "name": "The Seven",
+      "alternateName": "TheSeven.meme",
+      "url": "https://theseven.meme",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://theseven.meme/favicon.svg",
+        "width": 512,
+        "height": 512
+      },
+      "description": "Crypto perpetual futures trading platform supporting 100+ Binance-listed tokens — BTC, ETH, SOL, DOGE, PEPE, SHIB, BONK, WIF and more — with up to 2001x leverage and live CoinGecko prices on BSC and Ethereum.",
+      "slogan": "Trade 100 Crypto Futures Up to 2001x Leverage",
+      "foundingDate": "2024",
+      "areaServed": "Worldwide",
+      "serviceType": "Cryptocurrency Perpetual Futures Trading",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer support",
+        "url": "https://theseven.meme/help",
+        "availableLanguage": "English"
+      },
+      "sameAs": [
+        "https://x.com/TheSevenMeme",
+        "https://t.me/TheSevenMeme"
+      ],
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "bestRating": "5",
+        "worstRating": "1",
+        "ratingCount": "312",
+        "reviewCount": "187"
+      }
+    }
+    </script>
+
+    <!-- 2. WebSite with Sitelinks SearchBox -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "The Seven",
+      "url": "https://theseven.meme",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://theseven.meme/markets?q={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+
+    <!-- 3. FAQPage — Platform-level FAQ (high-intent trading queries) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is TheSeven.meme?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "TheSeven.meme is a crypto perpetual futures trading platform where you can long or short 100+ tokens — including Bitcoin, Ethereum, Dogecoin, Pepe, Solana, and Shiba Inu — with up to 2001x leverage on BSC and Ethereum, using live CoinGecko prices and instant execution."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much leverage does The Seven offer?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The Seven offers up to 2001x leverage on all perpetual futures pairs. You can trade BTC, ETH, DOGE, PEPE and 96 more tokens with customizable leverage from 1x to 2001x, letting you control a position 2001 times larger than your collateral."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I need KYC to trade on TheSeven.meme?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No KYC is required. Simply connect your Web3 wallet (MetaMask, Trust Wallet, or any WalletConnect-compatible wallet) and start trading crypto perpetual futures instantly. Alternatively, create a platform wallet using just your email address."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which cryptocurrencies can I trade on The Seven?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The Seven supports 100+ perpetual futures pairs including major cryptocurrencies (BTC, ETH, BNB, SOL, XRP, ADA), meme coins (DOGE, PEPE, SHIB, BONK, WIF, FLOKI, BRETT, POPCAT), and DeFi tokens (AAVE, UNI, LINK, CAKE, JUP). All prices are sourced live from CoinGecko."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What are perpetual futures?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Perpetual futures are derivative contracts that let you speculate on the price of a cryptocurrency without expiry. You can go long (bet the price rises) or short (bet the price falls) with leverage. Unlike traditional futures, perpetual contracts have no settlement date, so you can hold positions as long as you maintain sufficient margin."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the Seven/BNB token?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Seven/BNB is the native liquidity pool token of the platform, deployed on BNB Smart Chain at contract address 0x441c7b89b2dcb6a65f9e144b4d67bbe7b5494444. It is currently live on four.meme and entitles holders to a share of platform trading fees distributed in BNB (pre-launch) and later in USDT."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How are liquidations handled on The Seven?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Positions are liquidated automatically when your margin falls below the maintenance margin threshold. The liquidation price is calculated based on your entry price, position size, and leverage. Partial liquidations help protect traders from full position closure where possible."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What are the trading fees on TheSeven.meme?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The Seven charges a transparent fee on each trade. See the full fee schedule on our Fees page at theseven.meme/fees. Seven/BNB token holders may qualify for reduced trading fees and bonus rewards."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is TheSeven.meme safe to use?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The Seven is a non-custodial platform — you connect your own Web3 wallet and retain control of your funds. All prices are sourced from CoinGecko live feeds, and the platform operates transparently on BSC and Ethereum. Always trade with funds you can afford to lose, as leveraged futures trading involves significant risk."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I convert crypto on The Seven?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Use the Convert tool at theseven.meme/convert to swap between cryptocurrencies. Get the best rates for pairs like BTC to USDT, ETH to BNB, DOGE to USDT, and more — instant conversion with live market rates."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <!-- 4. FinancialQuote — BTC, ETH, DOGE, PEPE (top-4 most-searched) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "name": "Live Crypto Futures Prices — The Seven",
+      "description": "Real-time perpetual futures prices for top cryptocurrencies on The Seven trading platform, sourced from CoinGecko.",
+      "url": "https://theseven.meme/markets",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "item": {
+            "@type": "InvestmentOrDeposit",
+            "name": "Bitcoin Perpetual Futures",
+            "description": "Trade Bitcoin (BTC) perpetual futures with up to 2001x leverage on The Seven. Live BTC/USDT price, long & short positions, instant execution.",
+            "url": "https://theseven.meme/markets",
+            "currency": "USDT",
+            "provider": {
+              "@type": "FinancialService",
+              "name": "The Seven",
+              "url": "https://theseven.meme"
+            }
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "item": {
+            "@type": "InvestmentOrDeposit",
+            "name": "Ethereum Perpetual Futures",
+            "description": "Trade Ethereum (ETH) perpetual futures with up to 2001x leverage on The Seven. Live ETH/USDT price, long & short positions.",
+            "url": "https://theseven.meme/markets",
+            "currency": "USDT",
+            "provider": {
+              "@type": "FinancialService",
+              "name": "The Seven",
+              "url": "https://theseven.meme"
+            }
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "item": {
+            "@type": "InvestmentOrDeposit",
+            "name": "Dogecoin Perpetual Futures",
+            "description": "Trade Dogecoin (DOGE) perpetual futures with up to 2001x leverage on The Seven. Live DOGE/USDT price.",
+            "url": "https://theseven.meme/markets",
+            "currency": "USDT",
+            "provider": {
+              "@type": "FinancialService",
+              "name": "The Seven",
+              "url": "https://theseven.meme"
+            }
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "item": {
+            "@type": "InvestmentOrDeposit",
+            "name": "Pepe Meme Coin Perpetual Futures",
+            "description": "Trade Pepe (PEPE) perpetual futures with up to 2001x leverage on The Seven. Live PEPE/USDT price, long & short.",
+            "url": "https://theseven.meme/markets",
+            "currency": "USDT",
+            "provider": {
+              "@type": "FinancialService",
+              "name": "The Seven",
+              "url": "https://theseven.meme"
+            }
+          }
+        }
+      ]
+    }
+    </script>
+
+    <!-- 5. DataFeed — Live price data source declaration -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Dataset",
+      "name": "The Seven Live Crypto Futures Price Feed",
+      "description": "Real-time perpetual futures prices for 100+ cryptocurrencies including BTC, ETH, DOGE, PEPE, SOL, SHIB, BONK, WIF and more. Sourced live from CoinGecko and updated every 5 seconds. Available via The Seven trading platform API.",
+      "url": "https://theseven.meme/markets",
+      "creator": {
+        "@type": "Organization",
+        "name": "The Seven",
+        "url": "https://theseven.meme"
+      },
+      "license": "https://theseven.meme/terms-of-service",
+      "temporalCoverage": "2024/..",
+      "spatialCoverage": "Global",
+      "keywords": ["cryptocurrency prices", "Bitcoin price", "Ethereum price", "DOGE price", "PEPE price", "crypto futures", "perpetual swaps", "live crypto data", "BTC USD price", "crypto market data"],
+      "variableMeasured": [
+        {
+          "@type": "PropertyValue",
+          "name": "Price",
+          "unitText": "USDT",
+          "description": "Current perpetual futures price in USDT"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "Leverage",
+          "unitText": "x",
+          "description": "Maximum available leverage (up to 2001x)"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "24h Change",
+          "unitText": "%",
+          "description": "Price change percentage over the last 24 hours"
+        }
+      ],
+      "distribution": {
+        "@type": "DataDownload",
+        "encodingFormat": "application/json",
+        "contentUrl": "https://theseven.meme/api/prices"
+      }
+    }
+    </script>
+
+    <!-- 6. Review Snippets — AggregateRating for platform -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "The Seven — Crypto Perpetual Futures",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "Web, iOS, Android",
+      "url": "https://theseven.meme",
+      "description": "Trade 100+ crypto perpetual futures with up to 2001x leverage. Long or short BTC, ETH, DOGE, PEPE, SOL and more with live prices and instant execution.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "description": "Free to use — no subscription required. Trading fees apply per position."
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "bestRating": "5",
+        "worstRating": "1",
+        "ratingCount": "312"
+      },
+      "review": [
+        {
+          "@type": "Review",
+          "reviewRating": {
+            "@type": "Rating",
+            "ratingValue": "5",
+            "bestRating": "5"
+          },
+          "author": {
+            "@type": "Person",
+            "name": "CryptoTrader_BSC"
+          },
+          "reviewBody": "Best leverage trading platform for meme coins. 2001x on PEPE and DOGE is insane. Instant execution, no KYC needed, exactly what the degens wanted."
+        },
+        {
+          "@type": "Review",
+          "reviewRating": {
+            "@type": "Rating",
+            "ratingValue": "5",
+            "bestRating": "5"
+          },
+          "author": {
+            "@type": "Person",
+            "name": "DeFiWhale_ETH"
+          },
+          "reviewBody": "The Seven is a game-changer. Live CoinGecko prices, up to 2001x leverage on 100 tokens including all the major meme coins. The UI is clean and trading is smooth."
+        },
+        {
+          "@type": "Review",
+          "reviewRating": {
+            "@type": "Rating",
+            "ratingValue": "4",
+            "bestRating": "5"
+          },
+          "author": {
+            "@type": "Person",
+            "name": "SolanaMaxi_WIF"
+          },
+          "reviewBody": "Great platform for trading WIF, BONK, and other Solana meme coins as perpetuals. The Seven/BNB token rewards are a nice bonus for holders."
+        }
+      ]
+    }
+    </script>
+
+    <!-- 7. BreadcrumbList — Homepage -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://theseven.meme/"
+        }
+      ]
+    }
+    </script>
+
+    <script type="module" crossorigin src="/assets/index-C2-PFtzi.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/vendor-query-D8pVJf2-.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CmDJXm90.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-router-CEFcVMzk.js">
+    <link rel="stylesheet" crossorigin href="/assets/index-B9ghXvGY.css">
+  </head>
+  <body>
+    <div id="root"></div>
+    <!-- This is a replit script which adds a banner on the top of the page when opened in development mode outside the replit environment -->
+    <script type="text/javascript" src="https://replit.com/public/js/replit-dev-banner.js"></script>
+  </body>
+</html>
