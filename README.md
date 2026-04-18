@@ -1,187 +1,283 @@
-# Seven Chain — Validator Node
+<div align="center">
 
-**Chain ID: 70007 | EVM-Compatible | BSC Fork | Parlia Consensus**
+![Seven Chain Validator Node](./images/banner.svg)
 
-The Seven Chain is the public settlement ledger for [TheSeven.meme](https://theseven.meme) perpetual futures platform. Every trade open, close, liquidation, and profit payout is written as an immutable transaction on this chain.
+# 🟢 7/Seven Chain — Validator Node
 
-Apply to run a validator node: [theseven.meme/become-validator](https://theseven.meme/become-validator)
+### **⚡ MAINNET READY — LAUNCHING APRIL 25, 2026 ⚡**
 
----
+[![Chain ID](https://img.shields.io/badge/Chain%20ID-70007-22c55e?style=for-the-badge&logo=ethereum)](https://theseven.meme)
+[![Consensus](https://img.shields.io/badge/Consensus-Parlia%20PoA%2FPoS-blue?style=for-the-badge)](https://theseven.meme/become-validator)
+[![Leverage](https://img.shields.io/badge/Leverage-Up%20to%202001×-orange?style=for-the-badge)](https://theseven.meme)
+[![Fees](https://img.shields.io/badge/Trading%20Fees-Zero-green?style=for-the-badge)](https://theseven.meme)
+[![License](https://img.shields.io/badge/License-MIT-gray?style=for-the-badge)](LICENSE)
 
-## Architecture
+**World's first on-chain immutable synthetic perpetual futures exchange — powered by 7/Seven Chain**
 
-```
-                ┌─────────────────────────────────┐
-                │        TheSeven.meme App          │
-                │  (React + Express + PostgreSQL)   │
-                └──────────────┬──────────────────┘
-                               │ JSON-RPC
-                               ▼
-     ┌─────────────────────────────────────────────────┐
-     │            Seven Chain (Chain ID: 70007)          │
-     │                                                   │
-     │  ┌──────────┐  ┌──────────┐  ┌──────────┐       │
-     │  │ Node 1   │  │ Node 2   │  │ Node 3   │       │
-     │  │Validator │◄─►Validator │◄─►Validator │       │
-     │  │DO $12/mo │  │DO $12/mo │  │DO $12/mo │       │
-     │  └────┬─────┘  └──────────┘  └──────────┘       │
-     │       │ Public RPC (Nginx + SSL)                  │
-     │       ▼                                           │
-     │  https://theseven.meme/api/seven-chain/jsonrpc                           │
-     └─────────────────────────────────────────────────┘
-```
+[🌐 Exchange](https://theseven.meme) • [📋 Become a Validator](https://theseven.meme/become-validator) • [🔍 Block Explorer](https://theseven.meme/blockchain/explorer) • [📞 Contact](#contact)
+
+</div>
 
 ---
 
-## One-Command Install
+## 🚀 MAINNET ANNOUNCEMENT — APRIL 25, 2026
 
-The fastest way to get a Seven Chain validator running on a fresh Ubuntu 22.04 VPS:
+> **Seven Chain Mainnet goes live on April 25, 2026.**
+>
+> Validator onboarding is **OPEN NOW**. Secure your position before mainnet launch and earn rewards from day one.
+> Validator slots are limited — first-come, first-serve.
+
+The Seven Chain is the public settlement ledger for [TheSeven.meme](https://theseven.meme). Every trade open, close, liquidation, and profit payout is written as an immutable on-chain transaction. You help settle them all — and get paid for it.
+
+---
+
+## 💰 VALIDATOR REWARDS — COMPLETE PACKAGE
+
+### Relay Fee Rewards (Per Trade)
+
+Every trade on TheSeven.meme generates a relay fee paid **directly to active validators**:
+
+| Network | Relay Fee Per Trade | USD Equivalent |
+|---------|-------------------|----------------|
+| **BNB Chain** | **0.0004 BNB** | **~$0.25** |
+| **Ethereum** | Equivalent in ETH | ~$0.25 |
+| **Solana** | Equivalent in SOL | ~$0.25 |
+| **Stablecoins** | USDC / USDT | $0.25 |
+
+> Fees accumulate automatically to your validator coinbase address. No manual claiming required.
+
+### 📈 Volume Share Rewards
+
+Validators also earn a **share of the total daily trading volume** on TheSeven.meme. The more the platform grows, the more you earn.
+
+| Validator Tier | Volume Share | Relay Fee | Extra Benefits |
+|---------------|-------------|-----------|----------------|
+| Basic Node | ✅ Daily share | ✅ Per-trade fee | — |
+| Silver (5,000 SEVEN) | ✅ 1.5× share | ✅ Per-trade fee | Priority block sealing |
+| Gold (10,000 SEVEN) | ✅ 2× share | ✅ Per-trade fee | + Governance votes + OTC access |
+| Parliament (50,000+ SEVEN) | ✅ 3× share | ✅ Per-trade fee | + Strategic seat + Co-branding |
+
+### 🎁 sUSDT Trading Rewards
+
+**Both traders AND validators** are eligible to earn **sUSDT rewards** for trading activity on [TheSeven.meme](https://theseven.meme).
+
+- Trade on the platform → earn sUSDT
+- Run a validator node → **also** earn sUSDT from platform reward pools
+- Rewards distributed based on activity and staking tier
+
+---
+
+## 📦 VALIDATOR PACKAGES — PoA & PoS
+
+Seven Chain uses **Parlia consensus** — a hybrid of **Proof of Authority (PoA)** and **Proof of Stake (PoS)**.
+
+- **PoA (Proof of Authority)** — Your identity and infrastructure are vetted. Immediate block-sealing rights.
+- **PoS (Proof of Stake)** — Stake SEVEN tokens as collateral. Earn proportional rewards. More stake = more authority = more earnings.
+
+### 🥉 BRONZE — Entry Validator (PoA)
+> *"Set up your node and help launch the chain"*
+
+- ✅ Block sealing rights
+- ✅ Relay fee per trade (0.0004 BNB / ~$0.25 equivalent)
+- ✅ Daily volume share
+- ✅ sUSDT trading rewards eligibility
+- ✅ Professional onboarding audit (FREE — our team verifies your setup)
+- ✅ Validator community access
+- **SEVEN stake required:** None (PoA entry)
+- **Cost:** $12–$24/month VPS
+
+### 🥈 SILVER — Staker Validator (PoS)
+> *"Stake SEVEN, earn more, vote on upgrades"*
+
+- ✅ Everything in Bronze
+- ✅ **1.5× daily volume share**
+- ✅ Priority block sealing
+- ✅ Early access to new trading pairs
+- ✅ Validator leaderboard badge
+- **SEVEN stake required:** 5,000 SEVEN tokens
+- **Access:** OTC purchase available (see below)
+
+### 🥇 GOLD — Authority Validator (PoS Premium)
+> *"10,000 SEVEN = maximum validator benefits"*
+
+- ✅ Everything in Silver
+- ✅ **2× daily volume share**
+- ✅ Governance voting rights on protocol upgrades
+- ✅ Co-marketing opportunities
+- ✅ Direct line to core team
+- ✅ Custom validator badge on leaderboard
+- **SEVEN stake required:** 10,000 SEVEN tokens
+- **Perk:** 10,000 SEVEN holders receive **exclusive OTC pricing** and **first access** to ecosystem opportunities
+
+### 👑 PARLIAMENT — Strategic Partner (Parlia Governance)
+> *"Be part of the ruling council of Seven Chain"*
+
+Because Seven Chain is built on **Parlia consensus**, we are actively seeking **Parliament validators** — nodes that participate in governance and co-steer the protocol direction.
+
+- ✅ Everything in Gold
+- ✅ **3× daily volume share**
+- ✅ Parliament seat in Parlia governance
+- ✅ Co-branding on TheSeven.meme
+- ✅ Strategic partnership opportunities
+- ✅ Revenue sharing discussions
+- ✅ Dedicated account manager
+- **SEVEN stake required:** 50,000+ SEVEN tokens
+- **Open to:** Exchanges, protocols, infrastructure providers, VCs, DAOs
+
+---
+
+## 🔑 SEVEN TOKEN — OTC ACCESS (Pre-Launch)
+
+> **$SEVEN has not launched publicly yet.**
+>
+> **Validators are the ONLY group with OTC access to purchase SEVEN tokens** before the public launch.
+
+This is your opportunity to:
+1. Acquire SEVEN at pre-launch pricing via OTC
+2. Stake it immediately as validator collateral
+3. Start earning from day one of mainnet
+
+**To access OTC purchasing:**
+📧 Email **info@theseven.meme** with subject: **"SEVEN OTC — Validator Interest"**
+
+Our team will reach out and guide you into the validator community to discuss amounts, pricing, and onboarding.
+
+---
+
+## 🏆 VALIDATOR LEADERBOARD
+
+Live validator rankings with rewards tracking available at:
+
+👉 **[theseven.meme/become-validator#leaderboard](https://theseven.meme/become-validator)**
+
+Rankings are based on:
+- Blocks sealed
+- Uptime percentage
+- SEVEN staked (tier multiplier)
+- Volume processed
+
+---
+
+## ⚙️ QUICK START — SET UP YOUR NODE
+
+### One-Command Install
 
 ```bash
 bash <(curl -s https://raw.githubusercontent.com/umairkhan2582/seven-chain-node/main/scripts/install.sh)
 ```
 
-This single command:
-- Installs the BSC/Geth binary (Go Ethereum fork)
-- Configures Nginx with SSL and rate limiting
-- Sets up UFW firewall rules (ports 30303 TCP/UDP for P2P, 443 for RPC)
-- Installs Fail2Ban for SSH protection
-- Creates and enables a `seven-chain` systemd service
+This installs everything: BSC binary, Nginx + SSL, UFW firewall, Fail2Ban, systemd service.
 
-After the installer finishes, import your validator key and start the node:
+### Step-by-Step Setup
 
-```bash
-bash scripts/import-key.sh 0xYOUR_VALIDATOR_PRIVATE_KEY
-systemctl start seven-chain
+**Step 1 — Provision a VPS**
+```
+Minimum: 2 vCPU | 2 GB RAM | 60 GB SSD | Ubuntu 22.04 LTS
+Recommended: 4 vCPU | 8 GB RAM | 240 GB SSD
+Providers: DigitalOcean ($12/mo), Hetzner, Vultr, Linode, AWS
 ```
 
----
-
-## Quick Start — Mainnet Validator Setup
-
-### Step 1: Generate Validator Keys (run once, locally)
-
+**Step 2 — Clone and Install**
 ```bash
-node scripts/generate-keys.js 3
-```
-
-Copy the output. Keep private keys secure — never commit them.
-
-### Step 2: Update Genesis Block
-
-Edit `genesis.json`:
-1. Replace `VALIDATOR_1_ADDRESS`, `VALIDATOR_2_ADDRESS`, `VALIDATOR_3_ADDRESS` with your generated addresses
-2. Replace `extraData` with the generated value from `generate-keys.js`
-3. Replace `alloc` keys with your actual addresses
-
-### Step 3: Provision 3 VPS Droplets
-
-- **Specs**: $12/month — 2 GB RAM, 2 vCPU, 60 GB SSD — Ubuntu 22.04 LTS
-- **Regions**: Choose 3 different regions for redundancy (e.g. NYC1, FRA1, SGP1)
-- **Label them**: `seven-validator-1`, `seven-validator-2`, `seven-validator-3`
-
-Recommended providers: DigitalOcean, Linode, Vultr, Hetzner.
-
-### Step 4: Install on Each Node
-
-```bash
-# SSH into each node
-ssh root@YOUR_SERVER_IP
-
-# Clone this repo
 git clone https://github.com/umairkhan2582/seven-chain-node.git
 cd seven-chain-node
-
-# Install (installs BSC binary, Nginx, UFW, systemd service)
 bash scripts/install.sh
+```
 
-# Import your validator key
+**Step 3 — Import Your Validator Key**
+```bash
 bash scripts/import-key.sh 0xYOUR_VALIDATOR_PRIVATE_KEY
-
-# Configure environment
-cp /etc/seven-chain/validator.env.example /etc/seven-chain/validator.env
-nano /etc/seven-chain/validator.env
-# Fill in: VALIDATOR_ADDRESS and BOOTNODE_ENODE
-```
-
-### Step 5: Set Up Public RPC (on Node 1 only)
-
-```bash
-bash scripts/setup-nginx.sh your-node.example.com admin@theseven.meme
-```
-
-This configures Nginx with SSL, rate limiting (50 req/s per IP), and CORS for public access.
-
-### Step 6: Start Validators
-
-```bash
-# On each node
 systemctl start seven-chain
-systemctl status seven-chain
+```
 
-# Check health
+**Step 4 — Verify Your Node**
+```bash
 bash scripts/healthcheck.sh
+# ✅ Node synced | ✅ Peering | ✅ Block sealing active
 ```
 
-### Step 7: Connect the Platform
+**Step 5 — Apply & Get Onboarded**
 
-Set the following environment variable in your deployment:
+Apply at [theseven.meme/become-validator](https://theseven.meme/become-validator) with your public RPC URL.
 
-```bash
-SEVEN_CHAIN_RPC_URL=https://theseven.meme/api/seven-chain/jsonrpc
-```
-
-Or register your node at [theseven.meme/become-validator](https://theseven.meme/become-validator) and the platform will auto-detect it via the health monitor.
+> 🔍 **FREE Professional Onboarding Audit:** Our team will verify your installation, check your config, audit your security setup, and guide you through your first SEVEN stake. You do the setup — we do the first-time audit.
 
 ---
 
-## Monitoring
+## 📅 TIMELINE
 
-### Check all nodes at once
+| Date | Milestone |
+|------|-----------|
+| Now | Validator onboarding open — apply at theseven.meme/become-validator |
+| **April 25, 2026** | **🟢 MAINNET LAUNCH — Seven Chain goes live** |
+| April 25, 2026 | Relay fees start flowing to active validators |
+| May 2026 | SEVEN token public launch — staking goes live for all |
+| May 2026 | Volume share rewards activate |
+| Q3 2026 | Parliament governance votes begin |
 
-```bash
-for IP in NODE1_IP NODE2_IP NODE3_IP; do
-  echo "=== $IP ===" && bash scripts/healthcheck.sh "http://${IP}:8545"
-done
+---
+
+## 📋 RULES & PARTICIPATION REQUIREMENTS
+
+1. **Uptime SLA:** Validators must maintain ≥95% uptime or risk being removed from the active set
+2. **Hardware:** Minimum specs must be met (see Quick Start above)
+3. **Identity:** PoA validators must verify identity via email — email info@theseven.meme
+4. **No malicious behaviour:** Attempting to double-sign, spam, or attack the network results in immediate slashing and removal
+5. **Staking (PoS tiers):** SEVEN tokens must be staked via the official staking contract — OTC-purchased tokens are valid
+6. **Jurisdiction:** Validators are responsible for complying with local regulations regarding blockchain node operation
+7. **Communication:** Validators must be reachable via their registered email for critical network updates
+8. **Updates:** Validators must apply node software updates within 48 hours of a critical release
+
+---
+
+## 🌐 NETWORK DETAILS
+
 ```
-
-### View logs
-
-```bash
-journalctl -u seven-chain -f
-# or
-tail -f /data/seven-chain/logs/seven-chain.log
-```
-
-### Check peer connectivity
-
-```bash
-curl -sf -X POST -H "Content-Type: application/json" \
-  --data '{"jsonrpc":"2.0","method":"admin_peers","params":[],"id":1}' \
-  http://localhost:8545 | jq '.result | length'
-# Should return 2 (for a 3-node setup)
+Network Name:  7/Seven Chain
+Chain ID:      70007
+Currency:      SEVEN (18 decimals)
+RPC:           https://theseven.meme/api/seven-chain/jsonrpc
+Explorer:      https://theseven.meme/blockchain/explorer
+Consensus:     Parlia (BSC/EVM fork)
+P2P Port:      30303 (TCP/UDP)
 ```
 
 ---
 
-## Apply to Become a Validator
+## 📬 CONTACT
 
-We are actively recruiting validator operators worldwide. To apply:
+| Purpose | Email |
+|---------|-------|
+| General & Validator Inquiries | **info@theseven.meme** |
+| Technical Support & Node Help | **support@theseven.meme** |
+| Strategic Partnerships & Parliament | **info@theseven.meme** |
+| SEVEN OTC Purchases | **info@theseven.meme** |
 
-- **Web form**: [theseven.meme/become-validator](https://theseven.meme/become-validator)
-- **Email**: support@theseven.meme
+> 📧 **Email us with subject "Validator Inquiry"** and one of our team members will reach out to guide you into the validator community and discuss opportunities.
 
-Minimum requirements: Ubuntu 22.04 LTS, 2 vCPU, 2 GB RAM, 60 GB SSD.
-
----
-
-## Roadmap
-
-- [x] Phase 1: Internal DB ledger (production)
-- [x] Phase 2: Seven Chain Mainnet — **Live** (Chain ID 70007, Parlia PoA)
-- [ ] Phase 3: Public validator onboarding + staking contracts
-- [ ] Phase 4: SEVEN/USDT as native gas token
+We are also **open to strategic partnerships** — exchanges, DeFi protocols, infrastructure providers, VCs, and DAOs are welcome to discuss Parliament validator seats.
 
 ---
 
-**TheSeven.meme Ltd**
+## 🔗 LINKS
+
+| Resource | URL |
+|----------|-----|
+| Exchange | [theseven.meme](https://theseven.meme) |
+| Become a Validator | [theseven.meme/become-validator](https://theseven.meme/become-validator) |
+| Block Explorer | [theseven.meme/blockchain/explorer](https://theseven.meme/blockchain/explorer) |
+| Whitepaper | [theseven.meme/whitepaper](https://theseven.meme/whitepaper) |
+| Node Repository | [github.com/umairkhan2582/seven-chain-node](https://github.com/umairkhan2582/seven-chain-node) |
+| Media Kit | [theseven.meme](https://theseven.meme) (footer → Media Kit) |
+
+---
+
+<div align="center">
+
+**Built with ❤️ by the TheSeven.meme team**
+
+*For validator support: support@theseven.meme | For inquiries: info@theseven.meme*
+
+![TheSeven.meme](./images/logo.png)
+
+</div>
