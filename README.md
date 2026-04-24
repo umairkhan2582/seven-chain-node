@@ -4,7 +4,7 @@
 
 # 🟢 7/Seven Chain — Validator Node
 
-### **⚡ MAINNET READY — LAUNCHING APRIL 25, 2026 ⚡**
+### **🟢 MAINNET IS LIVE — APRIL 25, 2026 🟢**
 
 [![Chain ID](https://img.shields.io/badge/Chain%20ID-70007-22c55e?style=for-the-badge&logo=ethereum)](https://theseven.meme)
 [![Consensus](https://img.shields.io/badge/Consensus-Parlia%20PoA%2FPoS-blue?style=for-the-badge)](https://theseven.meme/become-validator)
@@ -21,14 +21,32 @@
 
 ---
 
-## 🚀 MAINNET ANNOUNCEMENT — APRIL 25, 2026
+## 🟢 MAINNET IS LIVE — APRIL 25, 2026
 
-> **Seven Chain Mainnet goes live on April 25, 2026.**
+> **Seven Chain Mainnet launched on April 25, 2026.**
 >
-> Validator onboarding is **OPEN NOW**. Secure your position before mainnet launch and earn rewards from day one.
+> Validator onboarding is **OPEN**. Join now and earn relay fees from every trade settled on-chain.
 > Validator slots are limited — first-come, first-serve.
 
 The Seven Chain is the public settlement ledger for [TheSeven.meme](https://theseven.meme). Every trade open, close, liquidation, and profit payout is written as an immutable on-chain transaction. You help settle them all — and get paid for it.
+
+---
+
+## ⚡ SIGN UP AS A VALIDATOR — ONE COMMAND
+
+**The fastest way to register and install your node:**
+
+```bash
+bash <(curl -s https://raw.githubusercontent.com/umairkhan2582/seven-chain-node/main/scripts/validator-signup.sh)
+```
+
+This interactive script will:
+- ✅ Collect your validator details
+- ✅ Let you choose your tier (Bronze → Parliament)
+- ✅ Optionally install the node software automatically
+- ✅ Generate a pre-filled registration email for the team
+
+> No account creation needed. No web form. Just run the command and follow the prompts.
 
 ---
 
@@ -216,19 +234,25 @@ Our team will reach out personally and guide you into the validator community to
 
 ## ⚙️ QUICK START — SET UP YOUR NODE
 
-### One-Command Install
+### Option A — All-in-One (Recommended)
+
+Run the signup + install script in a single command on your server:
 
 ```bash
-bash <(curl -s https://raw.githubusercontent.com/umairkhan2582/seven-chain-node/main/scripts/install.sh)
+bash <(curl -s https://raw.githubusercontent.com/umairkhan2582/seven-chain-node/main/scripts/validator-signup.sh)
 ```
 
-### Step-by-Step
+The script guides you through everything: tier selection, node installation, and registration.
+
+---
+
+### Option B — Manual Step-by-Step
 
 **Step 1 — Provision a VPS**
 ```
-Minimum: 2 vCPU | 2 GB RAM | 60 GB SSD | Ubuntu 22.04 LTS
+Minimum:     2 vCPU | 2 GB RAM | 60 GB SSD | Ubuntu 22.04 LTS
 Recommended: 4 vCPU | 8 GB RAM | 240 GB SSD
-Providers: DigitalOcean ($12/mo), Hetzner, Vultr, Linode
+Providers:   DigitalOcean ($12/mo), Hetzner, Vultr, Linode
 ```
 
 **Step 2 — Clone and Install**
@@ -241,22 +265,42 @@ bash scripts/install.sh
 **Step 3 — Import Your Validator Key**
 ```bash
 bash scripts/import-key.sh 0xYOUR_VALIDATOR_PRIVATE_KEY
-systemctl start seven-chain
 ```
 
-**Step 4 — Verify Your Node**
+**Step 4 — Configure and Start**
+```bash
+# Edit your validator config
+nano /etc/seven-chain/validator.env
+
+# Set these values:
+# VALIDATOR_ADDRESS=0xYourAddress
+# BOOTNODE_ENODE=enode://...@157.245.137.129:30303
+
+# Start the node
+systemctl start seven-chain
+systemctl status seven-chain
+```
+
+**Step 5 — Verify Your Node**
 ```bash
 bash scripts/healthcheck.sh
-# ✅ Node synced | ✅ Peering | ✅ Block sealing active
+# ✅ Seven Chain (70007) node healthy
+# ✅ Block sealing active | ✅ Peers connected
 ```
 
-**Step 5 — Apply & Get FREE Onboarding Audit**
+**Step 6 — Register with the Team**
+```bash
+bash scripts/validator-signup.sh
+# Generates your registration email for info@theseven.meme
+```
+
+**Step 7 — Get Your FREE Onboarding Audit**
 
 Apply at [theseven.meme/become-validator](https://theseven.meme/become-validator) with your public RPC URL.
 
-> 🔍 **FREE Professional Onboarding Audit:** Our team verifies your installation, audits your security config, and guides your first SEVEN stake. You set it up — we make sure it's right.
+> 🔍 **FREE Professional Onboarding Audit:** Our team verifies your installation, audits your security config, and confirms you are block-sealing. You set it up — we make sure it's right.
 
-**Step 6 — Join the Community**
+**Step 8 — Join the Community**
 
 > 💬 **[Join Telegram → t.me/thesevenmeme](https://t.me/thesevenmeme)** for real-time support, updates, and the validator community.
 
@@ -266,10 +310,10 @@ Apply at [theseven.meme/become-validator](https://theseven.meme/become-validator
 
 | Date | Milestone |
 |------|-----------|
-| **Now** | Validator onboarding open — apply at theseven.meme/become-validator |
+| ✅ **April 25, 2026** | 🟢 **MAINNET LAUNCHED — Seven Chain is live** |
+| ✅ **April 25, 2026** | Relay fees flowing to all active validators |
+| **Now** | Validator onboarding open — sign up with one command above |
 | **Now** | Join Telegram for community access → t.me/thesevenmeme |
-| **April 25, 2026** | 🟢 **MAINNET LAUNCH — Seven Chain goes live** |
-| **April 25, 2026** | Relay fees start flowing to all active validators |
 | **May 2026** | $SEVEN token public launch — staking live for all |
 | **May 2026** | Volume share rewards & sUSDT reward pool activates |
 | **Q3 2026** | Parliament governance votes begin |

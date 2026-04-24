@@ -69,8 +69,8 @@ else
 fi
 
 echo "────────────────────────────────────────"
-if [ "$CHAIN_DEC" = "7777" ]; then
-  echo "  ✅ Seven Chain (7777) node healthy"
+if [ "$CHAIN_DEC" = "70007" ]; then
+  echo "  ✅ Seven Chain (70007) node healthy"
 else
-  echo "  ⚠️  Chain ID mismatch — expected 7777, got ${CHAIN_DEC}"
+  echo "  ⚠️  Chain ID mismatch — expected 70007, got ${CHAIN_DEC}"
 fi

@@ -56,7 +56,7 @@ function buildExtraData(validatorAddresses) {
 
 console.log('\n╔══════════════════════════════════════════════════════════╗');
 console.log('║        Seven Chain Validator Key Generator               ║');
-console.log('║  Chain ID: 7777  —  DO NOT COMMIT PRIVATE KEYS TO GIT  ║');
+console.log('║  Chain ID: 70007 — DO NOT COMMIT PRIVATE KEYS TO GIT  ║');
 console.log('╚══════════════════════════════════════════════════════════╝\n');
 
 const validators = [];
