@@ -289,6 +289,23 @@ Apply at [theseven.meme/become-validator](https://theseven.meme/become-validator
 
 ---
 
+## 🟢 ACTIVE VALIDATOR NODES
+
+### Node 1 — Genesis Validator
+
+| Field | Value |
+|-------|-------|
+| **Name** | Seven Chain Node 1 |
+| **Wallet Address** | `0x1405b4B8F48B27BE820AC86Df7CfE75885113109` |
+| **RPC Endpoint** | `http://157.245.137.129:8545` |
+| **Chain ID** | `70007` |
+| **Status** | 🟢 Active |
+| **Role** | Genesis PoA validator — seals all blocks until additional validators join |
+
+> This is the platform genesis validator. It seals every block and serves as the canonical on-chain authority until the network reaches the required validator threshold for full decentralization.
+
+---
+
 ## 🌐 NETWORK DETAILS
 
 ```
@@ -298,6 +315,7 @@ Currency:      SEVEN (18 decimals)
 RPC:           https://theseven.meme/api/seven-chain/jsonrpc
 Explorer:      https://theseven.meme/blockchain/explorer
 Consensus:     Parlia (BSC/EVM fork — PoA + PoS hybrid)
+Block Time:    1 second (transactions only — no empty blocks)
 P2P Port:      30303 (TCP/UDP)
 ```
 
