@@ -1,44 +1,42 @@
 # Security Policy
 
-## Supported Versions
+  ## Supported Versions
 
-| Version | Supported |
-|---------|-----------|
-| Latest (main branch) | Yes |
-| Older releases | No |
+  | Version | Supported |
+  |---------|-----------|
+  | 1.x (latest) | Yes |
+  | < 1.0 | No |
 
-## Reporting a Vulnerability
+  ## Reporting a Vulnerability
 
-**Please do not report security vulnerabilities through public GitHub issues.**
+  **Do NOT open a public GitHub issue for security vulnerabilities.**
 
-If you discover a security vulnerability in the Seven Chain node software, validator scripts, or anything related to the Seven Chain mainnet (Chain ID: 70007), please report it privately:
+  Report privately to: **support@theseven.meme**
+  Subject line: `SECURITY: [brief description]`
 
-**Email:** security@theseven.meme
+  ### What to Include
+  - Type of issue (key exposure, injection, replay attack, etc.)
+  - Steps to reproduce
+  - Potential impact
+  - Suggested fix (optional)
 
-Include in your report:
-- A description of the vulnerability and its potential impact
-- Steps to reproduce the issue
-- Any proof-of-concept code (if applicable)
-- Your suggested fix (optional)
+  ### Response Timeline
 
-## Response Timeline
+  | Step | Timeline |
+  |------|----------|
+  | Acknowledgement | Within 48 hours |
+  | Status update | Within 5 days |
+  | Patch (critical) | Within 7 days |
+  | Patch (non-critical) | Within 30 days |
 
-- **Acknowledgement:** Within 48 hours
-- **Initial assessment:** Within 5 business days
-- **Fix + disclosure:** Coordinated with reporter, typically within 30 days
+  ### In Scope
+  - Solver client in this repository
+  - Seven Chain Bridge API at https://theseven.meme
+  - Smart contracts deployed by Seven Chain
 
-## Scope
+  ### Out of Scope
+  - Social engineering attacks
+  - Third-party dependency issues
+  - External chain issues (BNB, Ethereum, etc.)
 
-In scope:
-- Seven Chain node configuration (`config.toml`, `genesis.json`)
-- Installer and setup scripts (`scripts/`)
-- Docker configuration
-- Any issue that could compromise validator key security
-
-Out of scope:
-- The BSC/Geth binary itself (report to [bnb-chain/bsc](https://github.com/bnb-chain/bsc))
-- TheSeven.meme web platform (email support@theseven.meme)
-
-## Recognition
-
-Responsible disclosures will be acknowledged in release notes (with your permission).
+  We follow coordinated disclosure. Responsible reporters will be credited in release notes.
