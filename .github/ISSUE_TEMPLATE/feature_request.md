@@ -1,31 +1,27 @@
 ---
-name: Feature request
-about: Suggest an improvement to the Seven Chain validator setup
-title: '[FEATURE] '
-labels: enhancement
-assignees: ''
----
+  name: Feature Request
+  about: Suggest a new feature for the Seven Chain validator node
+  title: '[FEATURE] '
+  labels: enhancement
+  assignees: ''
+  ---
 
-## Problem Statement
+  ## Feature Description
 
-_What problem does this feature solve? What is currently difficult or impossible?_
+  A clear description of what you want to happen.
 
-## Proposed Solution
+  ## Problem It Solves
 
-_Describe the improvement you'd like to see. Be as specific as possible._
+  What problem does this address? Why is it valuable for validators?
 
-## Alternatives Considered
+  ## Proposed Solution
 
-_Any alternative approaches you've thought about, and why you prefer your proposed solution._
+  How would you implement it?
 
-## Use Case
+  ## Alternatives Considered
 
-_Who benefits from this, and how often would it be used?_
-- [ ] Validator operators setting up new nodes
-- [ ] Existing validators maintaining nodes
-- [ ] Developers integrating with Seven Chain
-- [ ] Other:
+  Any workarounds or alternatives you have tried.
 
-## Additional Context
+  ## Additional Context
 
-_Any links, references, or examples from other projects that implement something similar._
+  Any other context or examples.
