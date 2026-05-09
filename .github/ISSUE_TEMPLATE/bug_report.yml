@@ -1,0 +1,50 @@
+name: Bug Report
+  about: Report a bug with the Seven Chain validator node
+  title: "[BUG] "
+  labels: ["bug"]
+  assignees: []
+  body:
+    - type: markdown
+      attributes:
+        value: |
+          Thanks for reporting a bug with the validator node!
+    - type: textarea
+      id: description
+      attributes:
+        label: Bug Description
+        description: A clear description of what the bug is.
+      validations:
+        required: true
+    - type: textarea
+      id: reproduce
+      attributes:
+        label: Steps to Reproduce
+        placeholder: |
+          1. Run install script
+          2. Configure validator.env
+          3. See error ...
+      validations:
+        required: true
+    - type: dropdown
+      id: os
+      attributes:
+        label: Operating System
+        options:
+          - Ubuntu 22.04
+          - Ubuntu 20.04
+          - Debian
+          - Other
+      validations:
+        required: true
+    - type: input
+      id: provider
+      attributes:
+        label: Server Provider
+        placeholder: "e.g. DigitalOcean, Hetzner, Vultr"
+    - type: textarea
+      id: logs
+      attributes:
+        label: Node Logs
+        description: "Output of: journalctl -u seven-chain -n 50"
+        render: shell
+  
