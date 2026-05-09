@@ -1,5 +1,5 @@
 name: Bug Report
-  about: Report a bug with the Seven Chain validator node
+  about: Report a bug in the Seven Chain Bridge
   title: "[BUG] "
   labels: ["bug"]
   assignees: []
@@ -7,7 +7,7 @@ name: Bug Report
     - type: markdown
       attributes:
         value: |
-          Thanks for reporting a bug with the validator node!
+          Thanks for reporting a bug! Please fill this out completely.
     - type: textarea
       id: description
       attributes:
@@ -20,9 +20,16 @@ name: Bug Report
       attributes:
         label: Steps to Reproduce
         placeholder: |
-          1. Run install script
-          2. Configure validator.env
+          1. Configure .env with ...
+          2. Run npm run dev
           3. See error ...
+      validations:
+        required: true
+    - type: textarea
+      id: expected
+      attributes:
+        label: Expected Behavior
+        description: What did you expect to happen?
       validations:
         required: true
     - type: dropdown
@@ -33,18 +40,20 @@ name: Bug Report
           - Ubuntu 22.04
           - Ubuntu 20.04
           - Debian
-          - Other
+          - macOS
+          - Windows
       validations:
         required: true
     - type: input
-      id: provider
+      id: nodeversion
       attributes:
-        label: Server Provider
-        placeholder: "e.g. DigitalOcean, Hetzner, Vultr"
+        label: Node.js Version
+        placeholder: "e.g. 20.0.0"
+      validations:
+        required: true
     - type: textarea
       id: logs
       attributes:
-        label: Node Logs
-        description: "Output of: journalctl -u seven-chain -n 50"
+        label: Relevant Logs
         render: shell
   
