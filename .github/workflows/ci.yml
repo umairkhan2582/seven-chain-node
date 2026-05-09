@@ -1,0 +1,43 @@
+name: CI
+
+  on:
+    push:
+      branches: [ main ]
+    pull_request:
+      branches: [ main ]
+
+  jobs:
+    lint-scripts:
+      name: Lint Shell Scripts
+      runs-on: ubuntu-latest
+
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v4
+
+        - name: Install shellcheck
+          run: sudo apt-get install -y shellcheck
+
+        - name: Lint all shell scripts
+          run: |
+            SCRIPTS=$(find . -name "*.sh" -not -path "*/node_modules/*" 2>/dev/null)
+            if [ -z "$SCRIPTS" ]; then
+              echo "No shell scripts found — skipping"
+              exit 0
+            fi
+            echo "$SCRIPTS" | xargs shellcheck
+            echo "All shell scripts passed"
+
+    validate-json:
+      name: Validate JSON Files
+      runs-on: ubuntu-latest
+
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v4
+
+        - name: Validate JSON
+          run: |
+            find . -name "*.json" -not -path "*/node_modules/*" | while read f; do
+              python3 -m json.tool "$f" > /dev/null && echo "OK: $f" || exit 1
+            done
