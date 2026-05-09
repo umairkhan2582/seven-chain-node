@@ -1,0 +1,29 @@
+name: Feature Request
+  about: Suggest a new feature for the validator node
+  title: "[FEATURE] "
+  labels: ["enhancement"]
+  assignees: []
+  body:
+    - type: markdown
+      attributes:
+        value: |
+          Thanks for suggesting an improvement to the validator node!
+    - type: textarea
+      id: feature
+      attributes:
+        label: Feature Description
+        description: What do you want to happen?
+      validations:
+        required: true
+    - type: textarea
+      id: problem
+      attributes:
+        label: Problem It Solves
+        description: Why is this valuable for validators?
+      validations:
+        required: true
+    - type: textarea
+      id: solution
+      attributes:
+        label: Proposed Solution
+  
