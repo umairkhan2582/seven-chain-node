@@ -1,44 +1,51 @@
-# Contributing to Seven Chain
+# Contributing to Seven Chain Node
 
-Thank you for your interest in contributing to the Seven Chain validator node software!
+  Thank you for contributing! Every improvement helps validators run more reliably and earn more.
 
-## Ways to Contribute
+  ## Getting Started
 
-### Run a Validator Node
-The most impactful contribution is running a validator node on the Seven Chain mainnet (Chain ID: 70007).
-Apply at [theseven.meme/become-validator](https://theseven.meme/become-validator).
+  1. Fork this repository
+  2. Clone your fork: git clone https://github.com/YOUR_USERNAME/seven-chain-node
+  3. Create a branch: git checkout -b feature/your-feature
 
-### Report Bugs
-Use the **Bug Report** issue template. Include:
-- Your OS and BSC binary version
-- Steps to reproduce
-- Relevant log output from `journalctl -u seven-chain -n 100`
+  ## What We Are Looking For
 
-### Suggest Improvements
-Use the **Feature Request** issue template. Explain:
-- The problem you are solving
-- Your proposed solution
-- Any alternatives you considered
+  ### High Priority
+  - Cross-distro install script improvements (Debian, Fedora, Arch)
+  - Grafana and Prometheus monitoring dashboards
+  - Security hardening scripts and firewall automation
+  - Cloud provider setup guides (AWS, GCP, Azure, Hetzner)
 
-### Submit Code Changes
-1. Fork this repository
-2. Create a feature branch: `git checkout -b feature/my-improvement`
-3. Make your changes and test them on a local node
-4. Commit with a clear message: `git commit -m "feat: describe what changed"`
-5. Push and open a Pull Request using the PR template
+  ### Good First Issues
+  - Documentation improvements
+  - Bug fixes in install or healthcheck scripts
+  - Translated documentation
+  - Additional OS support
 
-## Code Standards
+  ## Coding Standards
 
-- Shell scripts must pass `shellcheck`
-- Keep scripts idempotent (safe to run multiple times)
-- Document any new environment variables in `validator.env.example`
-- Test against a fresh Ubuntu 22.04 LTS environment before submitting
+  - Shell scripts must be POSIX-compatible where possible
+  - Scripts must be idempotent — safe to run more than once
+  - Fail loudly with clear, human-readable error messages
+  - Comment every non-obvious step
 
-## Security Issues
+  ## Submitting a Pull Request
 
-**Do not open a public issue for security vulnerabilities.**
-Report them privately via the [Security Policy](SECURITY.md).
+  1. Test on a clean Ubuntu 22.04 install minimum
+  2. Open a PR with a clear title and description
+  3. Reference related issues: Closes #123
+  4. PRs reviewed within 48 hours
 
-## Questions
+  ## Related Repositories
 
-Open a **Discussion** or email **support@theseven.meme**.
+  - [seven-chain-solver](https://github.com/umairkhan2582/seven-chain-solver) — Run a bridge solver node and earn fees
+
+  ## Community
+
+  | Channel | Contact |
+  |---------|---------|
+  | Telegram (fastest) | t.me/thesevenmeme |
+  | Technical support | support@theseven.meme |
+  | General inquiries | info@theseven.meme |
+
+  Built with love by the TheSeven.meme team
