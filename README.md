@@ -32,6 +32,59 @@ The Seven Chain is the public settlement ledger for [TheSeven.meme](https://thes
 
 ---
 
+---
+
+## 🌉 BRIDGE UPDATE — MAY 2026: SEVEN IS NOW BRIDGEABLE
+
+> **SEVEN tokens can now be bridged in both directions between BSC and Seven Chain.**
+
+Since mainnet launch, the Seven Chain Bridge has processed over 1,000 cross-chain transactions. As of May 2026, **full two-way bridging is live**:
+
+| Direction | Route | Use Case |
+|-----------|-------|----------|
+| **BSC → Seven Chain** | USDT / BNB → sUSDT / sBNB | Deposit funds, start trading on TheSeven.meme |
+| **Seven Chain → BSC** | sUSDT / sBNB → USDT / BNB | Withdraw profits back to BSC |
+
+### Why This Matters for Validators
+
+SEVEN tokens on the chain are the native staking and validator collateral asset. With two-way bridging live:
+
+- **Bridge USDT in** → receive sUSDT on Seven Chain → trade and earn fees → bridge profits back out
+- **Bridge SEVEN in** → stake it as validator collateral → earn relay fees on every block you seal
+- **No KYC. No account. No lockup.** Bridge in, validate, bridge profits out — fully non-custodial
+
+### How to Bridge
+
+1. Go to [theseven.meme](https://theseven.meme) → **Bridge** tab
+2. Select direction: BSC → Seven Chain or Seven Chain → BSC
+3. Enter amount — minimum 1 USDT
+4. Confirm your BSC transaction (for BSC → SEVEN) or Seven Chain transaction (for SEVEN → BSC)
+5. Solver fills your intent within **~30 seconds**
+6. Use your sUSDT/sBNB to trade or stake as a validator
+
+### Validator Staking Flow
+
+```
+Bridge USDT from BSC
+        │
+        ▼
+Receive sUSDT on Seven Chain (Chain ID 70007)
+        │
+        ▼
+Stake sUSDT as validator collateral
+        │
+        ▼
+Earn relay fees on every sealed block
+        │
+        ▼
+Bridge profits back to BSC anytime
+```
+
+> 📣 **New validators:** Use the bridge to fund your wallet on Seven Chain before running `scripts/validator-signup.sh`
+
+---
+
+
 ## ⚡ SIGN UP AS A VALIDATOR — ONE COMMAND
 
 **The fastest way to register and install your node:**
