@@ -1,17 +1,27 @@
 {
   "name": "seven-chain-node",
-  "version": "1.1.0",
-  "description": "Seven Chain Mainnet — validator node setup for Chain ID 70007 (BSC fork, Parlia consensus)",
+  "version": "2.0.0",
+  "description": "Seven Chain validator node — Chain ID 70007. Stake SEVEN + earn at theseven.meme/staking",
   "private": true,
   "scripts": {
-    "generate-keys": "node scripts/generate-keys.js",
+    "start":           "node src/node.js",
+    "init-genesis":    "node scripts/init-genesis.js",
+    "heartbeat":       "node scripts/heartbeat.js",
+    "generate-keys":   "node scripts/generate-keys.js",
     "build-extradata": "node scripts/build-extradata.js",
-    "register-validator": "bash scripts/validator-signup.sh"
+    "register":        "echo Register at https://theseven.meme/staking"
   },
   "dependencies": {
     "ethers": "^6.0.0"
   },
   "engines": {
     "node": ">=18.0.0"
-  }
+  },
+  "keywords": ["seven-chain","validator","staking","bsc","parlia","blockchain"],
+  "homepage": "https://theseven.meme/staking",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/umairkhan2582/seven-chain-node.git"
+  },
+  "license": "MIT"
 }
