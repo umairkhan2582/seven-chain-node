@@ -1,51 +1,56 @@
 # Contributing to Seven Chain Node
 
-  Thank you for contributing! Every improvement helps validators run more reliably and earn more.
+> Updated: May 20, 2026
 
-  ## Getting Started
+## Getting Started
 
-  1. Fork this repository
-  2. Clone your fork: git clone https://github.com/YOUR_USERNAME/seven-chain-node
-  3. Create a branch: git checkout -b feature/your-feature
+```bash
+git clone https://github.com/YOUR_USERNAME/seven-chain-node.git
+cd seven-chain-node
+git checkout -b feature/your-improvement
+npm install
+```
 
-  ## What We Are Looking For
+## High-Priority Contributions
 
-  ### High Priority
-  - Cross-distro install script improvements (Debian, Fedora, Arch)
-  - Grafana and Prometheus monitoring dashboards
-  - Security hardening scripts and firewall automation
-  - Cloud provider setup guides (AWS, GCP, Azure, Hetzner)
+- Heartbeat daemon reliability and retry logic
+- Grafana + Prometheus dashboards for validator stats
+- Cloud setup guides (AWS, GCP, Azure, Hetzner)
+- Cross-distro support (Debian, Fedora, Arch)
+- Security hardening automation scripts
 
-  ### Good First Issues
-  - Documentation improvements
-  - Bug fixes in install or healthcheck scripts
-  - Translated documentation
-  - Additional OS support
+## Good First Issues
 
-  ## Coding Standards
+- Documentation improvements
+- Translated docs (Chinese, Spanish, Arabic, Turkish)
+- Bug fixes in heartbeat or healthcheck scripts
+- Additional OS support
 
-  - Shell scripts must be POSIX-compatible where possible
-  - Scripts must be idempotent — safe to run more than once
-  - Fail loudly with clear, human-readable error messages
-  - Comment every non-obvious step
+## Code Standards
 
-  ## Submitting a Pull Request
+- Shell scripts: POSIX-compatible, idempotent, fail loudly
+- Test on clean Ubuntu 22.04 from scratch
+- Comment every non-obvious step
 
-  1. Test on a clean Ubuntu 22.04 install minimum
-  2. Open a PR with a clear title and description
-  3. Reference related issues: Closes #123
-  4. PRs reviewed within 48 hours
+## Pull Request Process
 
-  ## Related Repositories
+1. Test on a clean server from scratch
+2. Open PR with clear title and description
+3. Reference issues: `Closes #123`
+4. Review within 48 hours
 
-  - [seven-chain-solver](https://github.com/umairkhan2582/seven-chain-solver) — Run a bridge solver node and earn fees
+## Related Repos
 
-  ## Community
+| Repo | Purpose |
+|------|---------|
+| [seven-chain-node](https://github.com/umairkhan2582/seven-chain-node) | Validator node (this repo) |
+| [seven-chain-solver](https://github.com/umairkhan2582/seven-chain-solver) | Bridge solver node |
 
-  | Channel | Contact |
-  |---------|---------|
-  | Telegram (fastest) | t.me/thesevenmeme |
-  | Technical support | support@theseven.meme |
-  | General inquiries | info@theseven.meme |
+## Community
 
-  Built with love by the TheSeven.meme team
+| Channel | Link |
+|---------|------|
+| Telegram | t.me/thesevenmeme |
+| Buy SEVEN | theseven.meme/spot/seven |
+| Stake + Validate | theseven.meme/staking |
+| Support | support@theseven.meme |
