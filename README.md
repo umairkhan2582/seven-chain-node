@@ -192,6 +192,7 @@ Any Linux VPS works — DigitalOcean, Hetzner, AWS, Vultr, or your own bare meta
 | [**seven-chain-node**](https://github.com/umairkhan2582/seven-chain-node) | ← You are here — validator node client |
 | [**seven-chain-solver**](https://github.com/umairkhan2582/seven-chain-solver) | Bridge solver — run alongside this node to earn BNB relay fees |
 | [**seven-creator-kit**](https://github.com/umairkhan2582/seven-creator-kit) | Token launch toolkit — deploy meme tokens, migrate from pump.fun/four.meme |
+| [**seven-gaming-sdk**](https://github.com/umairkhan2582/seven-gaming-sdk) | Gaming SDK — 1s finality on-chain games, session keys, Unreal Engine plugin |
 
 All repositories: [`github.com/topics/seven-chain`](https://github.com/topics/seven-chain)
 
