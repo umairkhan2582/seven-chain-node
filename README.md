@@ -8,6 +8,8 @@
 
   [![Chain ID](https://img.shields.io/badge/Chain%20ID-70007-FFD700?style=for-the-badge&logo=ethereum&logoColor=black)](https://theseven.meme/developers)
   [![Active Validators](https://img.shields.io/badge/Validators-2%2F9%20Active-brightgreen?style=for-the-badge)](https://theseven.meme/blockchain/explorer)
+  [![Network](https://img.shields.io/badge/Network-Mainnet%20Live-00C853?style=for-the-badge&logo=statuspage&logoColor=white)](https://theseven.meme/blockchain/explorer)
+  [![Consensus](https://img.shields.io/badge/Consensus-Dual--Node%20Verified-blue?style=for-the-badge)](https://theseven.meme/blockchain/explorer)
   [![Mainnet](https://img.shields.io/badge/Status-Mainnet%20Live-brightgreen?style=for-the-badge)](https://theseven.meme/seven-network)
   [![Version](https://img.shields.io/badge/Version-2.0.1-orange?style=for-the-badge)](https://theseven.meme/become-validator)
   [![Earn SEVEN](https://img.shields.io/badge/Earn-Block%20Rewards%20+%20Relay%20Fees-orange?style=for-the-badge)](https://theseven.meme/become-validator)
@@ -48,7 +50,7 @@ Validators are the backbone of Seven Chain (Chain ID **70007**). They seal block
 | **SEVEN per block** | 0.0003 SEVEN (blocks with real user transactions) |
 | **BNB per bridge relay** | 0.0004 BNB per settled bridge intent |
 | **Staking multiplier** | 1× – 3× based on SEVEN staked |
-| **Registration** | Fully automatic via heartbeat — no approval needed |
+| **Registration** | Approval-Gated (Registered + Admin Approved) |
 | **Min server spec** | 2 vCPU · 4 GB RAM · 60 GB SSD · Linux |
 
 ### Why Join Now
@@ -90,7 +92,7 @@ npm start
 # Sends heartbeats every 30s — node registered automatically on first beat
 ```
 
-Your node starts earning as soon as it's live. No approval. No waiting list.
+Your node registers in pending status. Once approved by admin on theseven.meme, it participates in consensus.
 
 ### Docker
 
@@ -125,7 +127,7 @@ Each bridge intent you settle (if running the solver):
 
 ## Register Your Node
 
-Registration is **fully automatic** via heartbeat — your first heartbeat registers the node. Alternatively, register manually via API:
+Registration requires node submission via heartbeat or API, followed by **Platform Admin Approval** before joining active consensus. Alternatively, register manually via API:
 
 ```bash
 curl -X POST https://theseven.meme/api/node-register \
@@ -138,7 +140,7 @@ curl -X POST https://theseven.meme/api/node-register \
 # → { "success": true, "message": "Node registered." }
 ```
 
-No form. No email. No waiting period.
+Admin review protects the validator set against unauthorized RPC spoofing.
 
 ---
 
