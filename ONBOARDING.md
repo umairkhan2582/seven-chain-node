@@ -107,17 +107,19 @@ curl -s http://localhost:8545 -X POST -H "Content-Type: application/json" \
 
 ---
 
-## Step 5 — Instant Activation
+## Step 5 — Admin Approval & Network Activation
 
 ```
-Platform receives your form
-  -> Stakes SEVEN on-chain
-  -> Registers node in validator DB
-  -> Pings http://YOUR_IP:8545 with eth_chainId
-  -> Response = 70007 -> STATUS: "active"
-
-No email. No approval. Instant.
+Platform receives your registration
+  -> Registers node in candidate validator registry
+  -> Validates public RPC endpoint (Chain ID 70007)
+  -> Queues node in Admin Governance Panel as 'pending'
+  -> Admin approves node in theseven.meme/admin
+  -> STATUS transitions to: 'approved' / 'active'
+  -> Node joins P2P mesh (port 30303) and begins validating blocks
 ```
+
+> **Security Note:** Requiring admin approval for new validator onboarding protects Seven Chain against Sybil attacks and ensures only high-performance nodes join the active Parlia BFT consensus quorum.
 
 Check status:
 ```bash
