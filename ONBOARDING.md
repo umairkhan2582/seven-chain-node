@@ -16,7 +16,7 @@ STEP 1  Spin up a VPS — Ubuntu 22.04+, port 8545 open
 STEP 2  Clone repo + npm install + configure HTTPHost = "0.0.0.0"
             |
 STEP 3  npm run init-genesis && npm start
-          Verify: curl localhost:8545 returns chain ID 0x1117f (70007)
+          Verify: curl localhost:8545 returns chain ID 0x11177 (70007)
             |
 STEP 4  theseven.meme/staking
           Connect wallet → register node RPC URL (No staking required for validators)
@@ -94,7 +94,7 @@ npm run init-genesis
 npm start &
 curl -s http://localhost:8545 -X POST -H "Content-Type: application/json" \
   -d '{"jsonrpc":"2.0","method":"eth_chainId","params":[],"id":1}'
-# Must return: {"result":"0x1117f"}
+# Must return: {"result":"0x11177"}
 ```
 
 ---
