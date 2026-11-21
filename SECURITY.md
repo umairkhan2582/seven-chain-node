@@ -1,60 +1,27 @@
 # Security Policy
 
-> Updated: May 20, 2026
+Security reports should be sent privately to **support@theseven.meme**. Do not publish exploit details, private keys, seed phrases, keystore files, credentials, or sensitive production logs in a public issue or pull request. Include reproduction steps and affected versions only after removing secrets and personal data.
 
-## Supported Versions
+We will acknowledge reports as capacity allows. This repository does not promise a fixed response or remediation deadline.
 
-| Version | Supported |
-|---------|-----------|
-| 2.x     | Yes       |
-| 1.x     | Yes       |
-| < 1.0   | No        |
+## Supported software
 
-## Reporting a Vulnerability
+This is an actively changing community repository. Check the current `main` branch and release notes; do not assume an old version or deployment is supported without confirmation.
 
-**Do NOT open a public GitHub issue for security vulnerabilities.**
+## Validator security checklist
 
-Email: **support@theseven.meme**
-Subject: `SECURITY: [brief description]`
+- Keep validator signing keys in an operator-controlled keystore; never place private keys in source, shell arguments, logs, CI variables printed to output, or platform databases.
+- Use unique, strong keystore passwords and restrictive file permissions (`0700` directories, `0600` secret files). Keep encrypted backups offline.
+- Do not expose account unlock/signing, `admin`, `debug`, `personal`, `txpool`, or other privileged RPC namespaces to the public internet.
+- Keep HTTP/WS RPC bound to loopback/private interfaces. If external read access is required, use TLS, a strict read-method allowlist, authentication where supported, rate limits, and monitoring.
+- Never expose management ports or keystore paths through Docker port mappings or web servers.
+- Restrict SSH, update the host, use least privilege, and review firewall rules and logs.
+- Treat an RPC chain-ID response, heartbeat, or matching observation as a health signal only, not evidence of validator approval or a second signature.
 
-Response: within 24 hours. Critical patches: within 7 days.
+## Consensus claims
 
-## Scope
+The deployed Parlia-style chain identifies a proposer in the block header. It does not by itself prove that two validators signed each block. Do not present independent RPC observations as cryptographic signatures. A multi-signature claim requires a protocol-level certificate with independently validated signer identities and quorum rules.
 
-| In Scope | Out of Scope |
-|----------|--------------|
-| Validator RPC exposure | Social engineering |
-| Bridge contract bugs | Third-party wallet bugs |
-| Staking contract exploits | Cloud provider infra |
-| P2P consensus attacks | Already-public issues |
+## Reporting
 
-## Bridge Contract (Immutable)
-
-- **SevenBridgeLock v3**: `0x41A70A6bE222174D8369A90fE91017E8Fb74606f` (BSC Mainnet)
-- No admin key. No pause. No upgrade proxy. Final bytecode.
-
-## Validator Security Checklist
-
-```bash
-# Protect keystore
-chmod 600 ~/seven-chain-data/keystore/*
-chmod 600 ~/seven-chain-data/password.txt
-
-# Minimal firewall
-sudo ufw default deny incoming
-sudo ufw allow 22/tcp
-sudo ufw allow 8545/tcp
-sudo ufw allow 30303/tcp
-sudo ufw enable
-
-# Only expose safe RPC modules publicly
-# config.toml: HTTPModules = ["eth","net","web3"]
-```
-
-## Contact
-
-| Channel | Link |
-|---------|------|
-| Security | support@theseven.meme |
-| Telegram | t.me/thesevenmeme |
-| Staking | theseven.meme/staking |
+Email **support@theseven.meme** with subject `SECURITY: [brief description]`. Use a private channel for follow-up. If a secret was exposed, rotate or revoke it immediately and avoid including the replacement value in the report.

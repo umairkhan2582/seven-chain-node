@@ -1,113 +1,63 @@
 #!/usr/bin/env node
 /**
- * Seven Chain — Validator Key Generator
- * Generates real secp256k1 key pairs for validator nodes.
- * Run: npm install && node scripts/generate-keys.js [count]
- *
- * Output: private keys, Ethereum addresses, enode public keys,
- *         ready-to-paste genesis extraData, and env var exports.
- *
- * Store private keys in environment variables — NEVER commit them to git.
- *
- * Requires: ethers ^6 (npm install)
+ * Generate validator wallets and store encrypted keystores locally.
+ * Usage: npm run generate-keys -- [count]
+ * Private keys are never printed. Keep the generated .secrets directory offline
+ * and make an encrypted backup before moving a keystore to a validator host.
  */
-
+const fs = require('node:fs');
+const path = require('node:path');
+const readline = require('node:readline');
 let ethers;
-try {
-  ({ ethers } = require('ethers'));
-} catch {
-  console.error('\nERROR: ethers package not found. Run: npm install\n');
-  process.exit(1);
-}
+try { ({ ethers } = require('ethers')); }
+catch { console.error('ERROR: ethers package not found. Run npm ci.'); process.exit(1); }
 
-const count = parseInt(process.argv[2] || '3', 10);
-if (count < 1 || count > 21) {
-  console.error('Validator count must be between 1 and 21');
-  process.exit(1);
+const count = Number.parseInt(process.argv[2] || '1', 10);
+if (!Number.isInteger(count) || count < 1 || count > 21) {
+  console.error('Validator count must be an integer from 1 to 21.'); process.exit(1);
 }
-
-/**
- * Returns the 128-hex-char uncompressed public key (without 04 prefix)
- * — this is the key used in the enode:// URL.
- */
 function getEnodePublicKey(wallet) {
-  const pubKey = wallet.signingKey.publicKey; // '0x04xxxxxxxx...' (130 hex chars inc. 0x04)
-  return pubKey.slice(4); // remove '0x04' prefix → 128 hex chars = 64 bytes
+  return wallet.signingKey.publicKey.slice(4);
 }
-
-/**
- * Builds Parlia-compatible genesis extraData.
- * Format (hex): 32-byte vanity | N×20-byte validator addresses | 65-byte zero signature
- */
-function buildExtraData(validatorAddresses) {
-  if (!Array.isArray(validatorAddresses) || validatorAddresses.length === 0) {
-    throw new Error('At least one validator address is required');
+function buildExtraData(addresses) {
+  if (!addresses.length || addresses.some(a => !/^0x[0-9a-fA-F]{40}$/.test(a))) throw new Error('Invalid validator address set.');
+  return '0x' + '00'.repeat(32) + addresses.map(a => a.slice(2).toLowerCase()).join('') + '00'.repeat(65);
+}
+function readHiddenPassword(prompt) {
+  return new Promise((resolve, reject) => {
+    const input = process.stdin;
+    if (!input.isTTY || typeof input.setRawMode !== 'function') return reject(new Error('Run this command in an interactive terminal to enter the keystore password securely.'));
+    let value = '';
+    process.stdout.write(prompt);
+    input.setRawMode(true); input.resume(); input.setEncoding('utf8');
+    const cleanup = () => { input.setRawMode(false); input.pause(); input.removeListener('data', onData); process.stdout.write('\n'); };
+    const onData = (chunk) => {
+      for (const ch of chunk) {
+        if (ch === '\u0003') { cleanup(); reject(new Error('Cancelled.')); return; }
+        if (ch === '\r' || ch === '\n') { cleanup(); resolve(value); return; }
+        if (ch === '\u007f' || ch === '\b') value = value.slice(0, -1); else value += ch;
+      }
+    };
+    input.on('data', onData);
+  });
+}
+(async () => {
+  const password = await readHiddenPassword('Keystore password (12+ characters): ');
+  if (password.length < 12) throw new Error('Use a password at least 12 characters long.');
+  const confirm = await readHiddenPassword('Confirm password: ');
+  if (password !== confirm) throw new Error('Passwords do not match.');
+  const dir = path.resolve('.secrets');
+  fs.mkdirSync(dir, { recursive: true, mode: 0o700 }); fs.chmodSync(dir, 0o700);
+  const wallets = Array.from({ length: count }, () => ethers.Wallet.createRandom());
+  for (let i = 0; i < wallets.length; i++) {
+    const wallet = wallets[i];
+    const encrypted = await wallet.encrypt(password);
+    const file = path.join(dir, `validator-${i + 1}-${wallet.address.slice(2, 10).toLowerCase()}.json`);
+    fs.writeFileSync(file, encrypted, { flag: 'wx', mode: 0o600 }); fs.chmodSync(file, 0o600);
+    console.log(`Validator ${i + 1}: ${wallet.address}`);
+    console.log(`Encrypted keystore: ${path.relative(process.cwd(), file)}`);
+    console.log(`Enode public key: ${getEnodePublicKey(wallet)}`);
   }
-  for (const addr of validatorAddresses) {
-    if (!/^0x[0-9a-fA-F]{40}$/.test(addr)) {
-      throw new Error(`Invalid Ethereum address: ${addr}`);
-    }
-  }
-  const vanity       = '00'.repeat(32);                                     // 32 bytes
-  const validators   = validatorAddresses.map(a => a.slice(2).toLowerCase()).join(''); // N×20 bytes
-  const zeroSig      = '00'.repeat(65);                                     // 65 bytes
-  return '0x' + vanity + validators + zeroSig;
-}
-
-console.log('\n╔══════════════════════════════════════════════════════════╗');
-console.log('║        Seven Chain Validator Key Generator               ║');
-console.log('║  Chain ID: 70007 — DO NOT COMMIT PRIVATE KEYS TO GIT  ║');
-console.log('╚══════════════════════════════════════════════════════════╝\n');
-
-const validators = [];
-for (let i = 0; i < count; i++) {
-  const wallet = ethers.Wallet.createRandom();
-  const privateKey  = wallet.privateKey;
-  const address     = wallet.address;
-  const enodeKey    = getEnodePublicKey(wallet);
-
-  validators.push({ index: i + 1, privateKey, address, enodeKey });
-
-  console.log(`── Validator ${i + 1} ─────────────────────────────────────────────`);
-  console.log(`  Private Key   : ${privateKey}`);
-  console.log(`  Address       : ${address}  (checksum-encoded)`);
-  console.log(`  Enode Pub Key : ${enodeKey}`);
-  console.log('');
-}
-
-const addresses  = validators.map(v => v.address);
-const extraData  = buildExtraData(addresses);
-
-const lowerAddresses = addresses.map(a => a.toLowerCase());
-
-console.log('── Genesis extraData (paste into genesis.json) ─────────────');
-console.log(`  ${extraData}`);
-console.log('');
-console.log('── Alloc addresses (replace placeholders in genesis.json) ──');
-validators.forEach((v, i) => {
-  console.log(`  Validator ${i + 1}: ${v.address.toLowerCase()}`);
-});
-console.log('');
-console.log('── Environment Variables (set on each node server) ─────────');
-validators.forEach(v => {
-  console.log(`  export VALIDATOR_${v.index}_ADDRESS="${v.address.toLowerCase()}"`);
-  console.log(`  export VALIDATOR_${v.index}_KEY="${v.privateKey}"  # KEEP SECRET`);
-});
-console.log('');
-console.log('── Enode URLs (replace <IP_N> with each server IP) ─────────');
-validators.forEach((v, i) => {
-  console.log(`  Validator ${v.index}: enode://${v.enodeKey}@<IP_${i + 1}>:30311`);
-});
-console.log('');
-console.log('── Next Steps ──────────────────────────────────────────────');
-console.log('  1. Copy private keys to a secure secrets manager (NEVER to git)');
-console.log('  2. Replace extraData in genesis.json with the value above');
-console.log('  3. Replace alloc placeholder addresses in genesis.json with the real addresses');
-console.log('  4. Run: bash scripts/install.sh on each DigitalOcean droplet');
-console.log('  5. Run: bash scripts/import-key.sh on each droplet to import the private key');
-console.log('  6. Run: bash scripts/start-validator.sh on each droplet');
-console.log('  7. Set SEVEN_CHAIN_RPC_URL and SEVEN_CHAIN_PLATFORM_KEY as environment variables on your server');
-console.log('');
-console.log('  All generated addresses are real secp256k1 Ethereum addresses.');
-console.log('  Verified by: ethers.Wallet.createRandom() → keccak256(pubkey) → last 20 bytes');
-console.log('');
+  console.log(`Genesis extraData: ${buildExtraData(wallets.map(w => w.address))}`);
+  console.log('Private keys were not printed. Back up encrypted keystores securely; never commit them.');
+})().catch((err) => { console.error(`Key generation failed: ${err.message}`); process.exitCode = 1; });

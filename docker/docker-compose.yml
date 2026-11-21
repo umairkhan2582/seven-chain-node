@@ -1,8 +1,7 @@
 version: '3.8'
 
-# Seven Chain — 3-Node Testnet via Docker Compose
-# For development/testing. For production use install.sh on bare droplets.
-
+# Development/test network. RPC ports are intentionally not published to the host.
+# Add a reviewed TLS/read-only proxy only when external RPC access is required.
 services:
   bootnode:
     build:
@@ -14,8 +13,6 @@ services:
       - "30303:30303/udp"
     environment:
       VALIDATOR_ADDRESS: "${VALIDATOR_1_ADDRESS}"
-      # Bootnode does not connect to another bootnode — it IS the bootnode.
-      # Set BOOTNODE_KEY in .env (hex private key); validators derive the enode automatically.
     volumes:
       - bootnode-data:/data/seven-chain
       - ./secrets/validator1.pass:/run/secrets/keystore_pass:ro
@@ -29,9 +26,6 @@ services:
       context: ..
       dockerfile: docker/Dockerfile
     container_name: seven-chain-validator-1
-    ports:
-      - "8545:8545"
-      - "8546:8546"
     environment:
       VALIDATOR_ADDRESS: "${VALIDATOR_1_ADDRESS}"
       BOOTNODE_ENODE: "enode://${BOOTNODE_KEY}@172.20.0.10:30303"
@@ -50,9 +44,6 @@ services:
       context: ..
       dockerfile: docker/Dockerfile
     container_name: seven-chain-validator-2
-    ports:
-      - "8547:8545"
-      - "8548:8546"
     environment:
       VALIDATOR_ADDRESS: "${VALIDATOR_2_ADDRESS}"
       BOOTNODE_ENODE: "enode://${BOOTNODE_KEY}@172.20.0.10:30303"
@@ -71,9 +62,6 @@ services:
       context: ..
       dockerfile: docker/Dockerfile
     container_name: seven-chain-validator-3
-    ports:
-      - "8549:8545"
-      - "8550:8546"
     environment:
       VALIDATOR_ADDRESS: "${VALIDATOR_3_ADDRESS}"
       BOOTNODE_ENODE: "enode://${BOOTNODE_KEY}@172.20.0.10:30303"
