@@ -7,6 +7,7 @@
   **Run a Seven Chain Validator — Seal Blocks, Earn SEVEN + BNB Relay Fees**
 
   [![Chain ID](https://img.shields.io/badge/Chain%20ID-70007-FFD700?style=for-the-badge&logo=ethereum&logoColor=black)](https://theseven.meme/developers)
+  [![Active Validators](https://img.shields.io/badge/Validators-2%2F9%20Active-brightgreen?style=for-the-badge)](https://theseven.meme/blockchain/explorer)
   [![Mainnet](https://img.shields.io/badge/Status-Mainnet%20Live-brightgreen?style=for-the-badge)](https://theseven.meme/seven-network)
   [![Version](https://img.shields.io/badge/Version-2.0.1-orange?style=for-the-badge)](https://theseven.meme/become-validator)
   [![Earn SEVEN](https://img.shields.io/badge/Earn-Block%20Rewards%20+%20Relay%20Fees-orange?style=for-the-badge)](https://theseven.meme/become-validator)
@@ -28,6 +29,15 @@
 - **Staking multiplier live** — 1× – 3× earnings based on SEVEN staked
 
 ---
+
+
+## 🌐 Network Status & Decentralization Update (v2.1.0 — November 2026)
+
+- **Node 2 Activated**: Node 2 (`167.172.215.253`) has officially joined the validator setup and is actively peering and producing blocks alongside Node 1 (`134.209.213.221`).
+- **Decentralization Quorum**: Network consensus is now running on a multi-node architecture (2/9 active validators), advancing towards the target 9-validator threshold.
+- **RPC Hardening**: Public JSON-RPC has been secured to `eth, net, web3` modules only, eliminating administrative and miner exposure.
+- **Direct P2P Peering**: Full bidirectional P2P gossip mesh established between Node 1 and Node 2.
+
 
 ## What is a Seven Chain Validator?
 
