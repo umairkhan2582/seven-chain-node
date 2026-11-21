@@ -12,7 +12,7 @@
     "register":        "echo Register at https://theseven.meme/staking"
   },
   "dependencies": {
-    "ethers": "^6.0.0"
+    "ethers": "^6.17.0"
   },
   "engines": {
     "node": ">=18.0.0"
