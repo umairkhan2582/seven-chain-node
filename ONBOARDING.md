@@ -1,6 +1,6 @@
 # Seven Chain — Validator Onboarding
 
-> **Updated: May 20, 2026 — Zero human interaction. Active in under 5 minutes.**
+> **Updated: May 20, 2026 — Strict security verification. Admin approved.**
 
 ---
 
@@ -24,7 +24,7 @@ STEP 4  theseven.meme/staking
             |
 STEP 5  Platform auto-registers node
           Pings RPC immediately
-          If chain ID 70007 confirmed → STATUS: ACTIVE instantly
+          If chain ID 70007 confirmed → STATUS: PENDING (Admin Approval Required)
             |
 STEP 6  npm run heartbeat -- --wallet 0xYOUR_WALLET --rpc http://YOUR_IP:8545
           Runs every 30 seconds forever
@@ -116,7 +116,7 @@ Platform receives your form
   -> Pings http://YOUR_IP:8545 with eth_chainId
   -> Response = 70007 -> STATUS: "active"
 
-No email. No approval. Instant.
+Protected onboarding: requires admin approval before validator activation.
 ```
 
 Check status:
