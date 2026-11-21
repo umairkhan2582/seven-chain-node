@@ -19,7 +19,7 @@ STEP 3  npm run init-genesis && npm start
           Verify: curl localhost:8545 returns chain ID 0x1117f (70007)
             |
 STEP 4  theseven.meme/staking
-          Connect wallet → choose tier → enter stake + RPC URL
+          Connect wallet → register node RPC URL (No staking required for validators)
           Click "Stake & Register"
             |
 STEP 5  Platform auto-registers node
@@ -59,7 +59,7 @@ STEP 7  Earn automatically
 | GOLD    | 10,000    | 18%/yr |
 | DIAMOND | 50,000    | 25%/yr |
 
-> Start with BRONZE (free) — upgrade anytime at theseven.meme/staking
+> Validator participation requires 0 SEVEN stake. Optional staking is available on the platform for token holders.
 
 ---
 
@@ -183,3 +183,18 @@ View your earnings at **[theseven.meme/staking](https://theseven.meme/staking)**
 
 *Seven Chain Validator Onboarding — Updated May 20, 2026*
 *Zero human interaction. Permissionless. On-chain.*
+
+
+---
+
+## 💎 Genesis Allocation & Token Supply Mechanics
+
+Seven Chain operates with a fixed genesis allocation established at Chain ID 70007:
+- **Treasury & Ecosystem:** 777,000,000 SEVEN allocated to `0x7765bb6B86Ba85B1145E8F40025f532F97782BeB`.
+- **Genesis Validator:** 10 SEVEN allocated to `0x1405b4B8F48B27BE820AC86Df7CfE75885113109`.
+- **Total Initial Supply:** 777,000,010 SEVEN.
+
+### What Happens to Supply When Node 2 and New Validators Join?
+- **Zero Dilution / No Supply Change:** Joining as a new validator (such as Node 2) syncs the existing ledger blocks (from block 0 to the current canonical height). It **does not re-execute or alter the genesis allocation**, and no new tokens are minted outside of standard block validation gas fees.
+- **Supply Invariance:** The total circulating supply remains strictly governed by the canonical chain ledger.
+- **Decentralization Quorum:** Expanding from Node 1 to 9 distributed validator nodes secures the network consensus without altering balances, token contracts, or bonding curve states.

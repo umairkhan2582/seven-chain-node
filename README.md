@@ -218,3 +218,7 @@ All repositories: [`github.com/topics/seven-chain`](https://github.com/topics/se
 ## License
 
 MIT
+
+
+## 💎 Genesis Allocation & Supply Invariance
+Seven Chain mainnet operates on Chain ID 70007 with a fixed genesis supply of **777,000,010 SEVEN** (777M Treasury/Ecosystem + 10 Genesis Validator). Adding validator nodes (including Node 2 through Node 9) syncs the verified block history without modifying or inflating the genesis token allocations. Validators secure the decentralized consensus and earn transaction fees.

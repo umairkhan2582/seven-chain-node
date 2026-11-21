@@ -130,7 +130,7 @@ curl -s http://YOUR_SERVER_IP:8545 -X POST \
 
 1. Go to **[theseven.meme/staking](https://theseven.meme/staking)**
 2. Connect wallet
-3. Choose tier, enter stake amount
+3. Register your node RPC URL (No SEVEN stake required)
 4. Enter **Node RPC URL**: `http://YOUR_SERVER_IP:8545`
 5. Click **Stake & Register**
 

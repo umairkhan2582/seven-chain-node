@@ -46,7 +46,7 @@ read -rp "  Telegram handle (optional):  " VALIDATOR_TG
 echo ""
 echo -e "${BOLD}[STEP 2/4]  Choose your validator tier${RESET}"
 echo ""
-echo "  1)  🥉 BRONZE   — Entry PoA validator        (no SEVEN stake required)"
+echo "  1)  🛡️ Consensus Validator — Active Node (0 SEVEN stake required — 9/9 decentralized quorum)"
 echo "  2)  🥈 SILVER   — Staked PoS validator        (5,000 SEVEN)"
 echo "  3)  🥇 GOLD     — Authority PoS validator     (10,000 SEVEN)"
 echo "  4)  👑 PARLIAMENT — Strategic partner         (50,000+ SEVEN)"
@@ -58,7 +58,7 @@ case "$TIER_CHOICE" in
   2) TIER="SILVER — 5,000 SEVEN stake";;
   3) TIER="GOLD — 10,000 SEVEN stake";;
   4) TIER="PARLIAMENT — 50,000+ SEVEN stake";;
-  *) TIER="BRONZE — entry PoA (no stake)";;
+  *) TIER="Consensus Validator — 0 stake required";;
 esac
 
 echo ""
