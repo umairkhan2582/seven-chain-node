@@ -126,7 +126,7 @@ curl -s http://YOUR_SERVER_IP:8545 -X POST \
 
 ---
 
-## 7. Register as Validator — Self-Service, No Approval
+## 7. Register as Validator — Approval Required
 
 1. Go to **[theseven.meme/staking](https://theseven.meme/staking)**
 2. Connect wallet
@@ -138,9 +138,9 @@ Platform immediately:
 - Stakes your SEVEN
 - Auto-registers your node
 - Pings your RPC (eth_chainId must return 70007)
-- Sets status → **ACTIVE**
+- Sets status → **PENDING** until verified and approved by admin
 
-**No email. No admin. Instant.**
+**Node enters Pending status until verified and approved by admin.**
 
 ---
 
