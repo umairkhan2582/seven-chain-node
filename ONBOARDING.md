@@ -1,202 +1,21 @@
-# Seven Chain — Validator Onboarding
+# Seven Chain Validator Onboarding
 
-> **Updated: May 20, 2026 — Zero human interaction. Active in under 5 minutes.**
+This repository is for the validator client only. Bridge solvers are separate processes with separate keys and configuration.
 
----
+## Start safely
 
-## The Flow
+1. Review this repository and verify the chain ID/genesis hash with an independent source before connecting a production node.
+2. Install on an operator-managed Linux host with `sudo bash scripts/install.sh`.
+3. Copy `/etc/seven-chain/validator.env.example` to `/etc/seven-chain/validator.env`, set safe ownership/permissions, and configure P2P bootstrap peers.
+4. Run `sudo bash scripts/create-validator-account.sh`; it generates the account inside the encrypted local keystore and prints only the public address. Put that address in `VALIDATOR_ADDRESS`.
+5. Start `seven-chain` and verify local RPC health with `bash scripts/healthcheck.sh http://127.0.0.1:8545`.
 
-```
-STEP 0  Get SEVEN tokens
-          theseven.meme/spot/seven  (buy with sUSDT)
-          theseven.meme/bridge      (bridge USDT from BNB Chain first)
-            |
-STEP 1  Spin up a VPS — Ubuntu 22.04+, port 8545 open
-            |
-STEP 2  Clone repo + npm install + configure HTTPHost = "0.0.0.0"
-            |
-STEP 3  npm run init-genesis && npm start
-          Verify: curl localhost:8545 returns chain ID 0x11177 (70007)
-            |
-STEP 4  theseven.meme/staking
-          Connect wallet → register node RPC URL (No staking required for validators)
-          Click "Stake & Register"
-            |
-STEP 5  Platform auto-registers node
-          Pings RPC immediately
-          If chain ID 70007 confirmed → STATUS: ACTIVE instantly
-            |
-STEP 6  npm run heartbeat -- --wallet 0xYOUR_WALLET --rpc http://YOUR_IP:8545
-          Runs every 30 seconds forever
-          OR install systemd service (see VALIDATOR_SETUP.md)
-            |
-STEP 7  Earn automatically
-          Block rewards  — per block sealed
-          Relay fees     — 0.0004 BNB per bridged trade opened
-          Staking APR    — 8-25%/yr on staked SEVEN
-```
+Keep RPC and management methods private. The installer does not open HTTP/HTTPS ports. Expose P2P port `30303` TCP/UDP for peer discovery and block gossip.
 
----
+## Live-network limitation
 
-## Step 0 — Get SEVEN
+The checked-in genesis contains one validator. This repo does not provide a live validator-set upgrade, does not prove the current active set, and does not make a node a validator merely because it is online. Expanding an existing network requires a tested consensus-compatible upgrade and coordinated activation. Never replace genesis or reset an existing data directory to add validators.
 
-### Buy on Spot Market
-1. Go to **[theseven.meme/spot/seven](https://theseven.meme/spot/seven)**
-2. Connect MetaMask or Binance Wallet
-3. Buy SEVEN with sUSDT
+## Separate services
 
-### Bridge First (if you have BNB/USDT on BNB Chain)
-1. Go to **[theseven.meme/bridge](https://theseven.meme/bridge)**
-2. Select BSC → Seven Chain, enter amount, confirm
-3. Solver fills within ~30 seconds
-4. Use sUSDT to buy SEVEN at **[theseven.meme/spot/seven](https://theseven.meme/spot/seven)**
-
-### Tier Selection
-| Tier    | Stake     | APR    |
-|---------|-----------|--------|
-| BRONZE  | 0 SEVEN   | 8%/yr  |
-| SILVER  | 5,000     | 12%/yr |
-| GOLD    | 10,000    | 18%/yr |
-| DIAMOND | 50,000    | 25%/yr |
-
-> Validator participation requires 0 SEVEN stake. Optional staking is available on the platform for token holders.
-
----
-
-## Step 1 — VPS Setup
-
-```bash
-sudo ufw allow 22/tcp && sudo ufw allow 8545/tcp && sudo ufw enable
-```
-
-Any cloud provider works: DigitalOcean, Hetzner, Vultr, AWS Lightsail.
-Minimum: 2 vCPU / 4 GB RAM / 50 GB SSD.
-
----
-
-## Step 2 — Install
-
-```bash
-curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
-sudo apt-get install -y nodejs git
-git clone https://github.com/umairkhan2582/seven-chain-node.git
-cd seven-chain-node && npm install
-cp config.toml config.local.toml
-# Edit config.local.toml: HTTPHost = "0.0.0.0"
-```
-
----
-
-## Step 3 — Start Node
-
-```bash
-npm run init-genesis
-npm start &
-curl -s http://localhost:8545 -X POST -H "Content-Type: application/json" \
-  -d '{"jsonrpc":"2.0","method":"eth_chainId","params":[],"id":1}'
-# Must return: {"result":"0x11177"}
-```
-
----
-
-## Step 4 — Register at theseven.meme/staking
-
-1. **[theseven.meme/staking](https://theseven.meme/staking)**
-2. Connect wallet → select tier → enter stake + `http://YOUR_IP:8545`
-3. Click **Stake & Register**
-
----
-
-## Step 5 — Admin Approval & Network Activation
-
-```
-Platform receives your registration
-  -> Registers node in candidate validator registry
-  -> Validates public RPC endpoint (Chain ID 70007)
-  -> Queues node in Admin Governance Panel as 'pending'
-  -> Admin approves node in theseven.meme/admin
-  -> STATUS transitions to: 'approved' / 'active'
-  -> Node joins P2P mesh (port 30303) and begins validating blocks
-```
-
-> **Security Note:** Requiring admin approval for new validator onboarding protects Seven Chain against Sybil attacks and ensures only high-performance nodes join the active Parlia BFT consensus quorum.
-
-Check status:
-```bash
-curl "https://theseven.meme/api/validators/0xYOUR_WALLET" | python3 -m json.tool
-```
-
----
-
-## Step 6 — Heartbeat (systemd)
-
-```bash
-sudo tee /etc/systemd/system/seven-heartbeat.service > /dev/null << EOF
-[Unit]
-Description=Seven Chain Validator Heartbeat
-After=network.target
-
-[Service]
-WorkingDirectory=/root/seven-chain-node
-ExecStart=npm run heartbeat -- --wallet 0xYOUR_WALLET --rpc http://YOUR_IP:8545
-Restart=always
-RestartSec=10
-
-[Install]
-WantedBy=multi-user.target
-EOF
-systemctl daemon-reload && systemctl enable --now seven-heartbeat
-```
-
----
-
-## Step 7 — Earnings Are Automatic
-
-Once active, earnings accumulate without any action:
-
-**Relay fees** — Every time a BNB/ETH bridge user opens a futures trade:
-- They pay 0.0004 BNB
-- It goes directly to your validator wallet
-
-**Block rewards** — SEVEN emitted each block your node seals
-
-**Staking APR** — Paid daily in SEVEN:
-- BRONZE: 8%/yr
-- SILVER (5k SEVEN): 12%/yr — ~$60,000/yr at $100/SEVEN
-- GOLD (10k SEVEN): 18%/yr — ~$180,000/yr at $100/SEVEN
-- DIAMOND (50k SEVEN): 25%/yr — ~$1,250,000/yr at $100/SEVEN
-
-View your earnings at **[theseven.meme/staking](https://theseven.meme/staking)**
-
----
-
-## Quick Reference
-
-| What | URL |
-|------|-----|
-| Buy SEVEN | https://theseven.meme/spot/seven |
-| Bridge from BNB | https://theseven.meme/bridge |
-| Stake + Register | https://theseven.meme/staking |
-| Monitor earnings | https://theseven.meme/staking |
-| Telegram support | https://t.me/thesevenmeme |
-| Email | support@theseven.meme |
-
----
-
-*Seven Chain Validator Onboarding — Updated May 20, 2026*
-*Zero human interaction. Permissionless. On-chain.*
-
-
----
-
-## 💎 Genesis Allocation & Token Supply Mechanics
-
-Seven Chain operates with a fixed genesis allocation established at Chain ID 70007:
-- **Treasury & Ecosystem:** 777,000,000 SEVEN allocated to `0x7765bb6B86Ba85B1145E8F40025f532F97782BeB`.
-- **Genesis Validator:** 10 SEVEN allocated to `0x1405b4B8F48B27BE820AC86Df7CfE75885113109`.
-- **Total Initial Supply:** 777,000,010 SEVEN.
-
-### What Happens to Supply When Node 2 and New Validators Join?
-- **Zero Dilution / No Supply Change:** Joining as a new validator (such as Node 2) syncs the existing ledger blocks (from block 0 to the current canonical height). It **does not re-execute or alter the genesis allocation**, and no new tokens are minted outside of standard block validation gas fees.
-- **Supply Invariance:** The total circulating supply remains strictly governed by the canonical chain ledger.
-- **Decentralization Quorum:** Expanding from Node 1 to 9 distributed validator nodes secures the network consensus without altering balances, token contracts, or bonding curve states.
+Do not combine validator and solver credentials. A validator process receives only its validator keystore; a solver process receives only its solver secret. Each service should have its own host or isolated service account, independently managed configuration, and least-privilege access.

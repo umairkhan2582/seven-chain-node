@@ -1,37 +1,51 @@
-#!/bin/bash
-# ================================================================
-# Seven Chain — Start Validator Node
-# Run this AFTER install.sh and configuring validator.env
-# ================================================================
-
+#!/usr/bin/env bash
+# Start the upstream BSC client with this repository's Seven Chain configuration.
 set -euo pipefail
 
-DATA_DIR="/data/seven-chain"
+DATA_DIR="${DATA_DIR:-/data/seven-chain}"
 LOG_DIR="${DATA_DIR}/logs"
+ENV_FILE="${VALIDATOR_ENV_FILE:-/etc/seven-chain/validator.env}"
+PASS_FILE="${KEYSTORE_PASSWORD_FILE:-/etc/seven-chain/keystore.pass}"
 
-# Load environment
-if [ -f /etc/seven-chain/validator.env ]; then
-  source /etc/seven-chain/validator.env
-else
-  echo "ERROR: /etc/seven-chain/validator.env not found"
-  echo "Copy validator.env.example and fill in your values."
+if [[ ! -r "${ENV_FILE}" ]]; then
+  echo "ERROR: ${ENV_FILE} is missing or unreadable." >&2
+  echo "Create it from /etc/seven-chain/validator.env.example." >&2
+  exit 1
+fi
+# The operator-owned file contains non-secret node settings only.
+# shellcheck disable=SC1090
+source "${ENV_FILE}"
+
+: "${VALIDATOR_ADDRESS:?Set VALIDATOR_ADDRESS in ${ENV_FILE}}"
+if [[ ! "${VALIDATOR_ADDRESS}" =~ ^0x[0-9a-fA-F]{40}$ ]]; then
+  echo "ERROR: VALIDATOR_ADDRESS must be a 20-byte 0x-prefixed address." >&2
+  exit 1
+fi
+if ! command -v bsc >/dev/null 2>&1; then
+  echo "ERROR: bsc binary not found. Run scripts/install.sh first." >&2
+  exit 1
+fi
+if [[ ! -r "${PASS_FILE}" ]]; then
+  echo "ERROR: keystore password file is missing or unreadable: ${PASS_FILE}" >&2
   exit 1
 fi
 
-echo "Starting Seven Chain validator node..."
-echo "  Validator: ${VALIDATOR_ADDRESS}"
-echo "  Data dir : ${DATA_DIR}"
-echo "  Chain ID : 70007"
-echo "  Bootnode : ${BOOTNODE_ENODE}"
-echo ""
+BOOTNODE_ENODES="${BOOTNODE_ENODES:-${BOOTNODE_ENODE:-}}"
+mkdir -p "${LOG_DIR}"
 
-bsc \
-  --config "${DATA_DIR}/config.toml" \
-  --datadir "${DATA_DIR}" \
-  --unlock "${VALIDATOR_ADDRESS}" \
-  --password /etc/seven-chain/keystore.pass \
-  --mine \
-  --bootnodes "${BOOTNODE_ENODE}" \
-  --networkid 70007 \
-  --verbosity 3 \
-  2>&1 | tee -a "${LOG_DIR}/seven-chain.log"
+args=(
+  --config "${DATA_DIR}/config.toml"
+  --datadir "${DATA_DIR}"
+  --unlock "${VALIDATOR_ADDRESS}"
+  --password "${PASS_FILE}"
+  --mine
+  --networkid 70007
+  --verbosity 3
+)
+if [[ -n "${BOOTNODE_ENODES}" ]]; then
+  # A comma-separated list permits more than one independently operated seed.
+  args+=(--bootnodes "${BOOTNODE_ENODES}")
+fi
+
+printf 'Starting Seven Chain validator (chain ID 70007); P2P bootstrap peers: %s\n' "${BOOTNODE_ENODES:-discovery only}"
+exec bsc "${args[@]}"
