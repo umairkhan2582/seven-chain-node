@@ -52,15 +52,18 @@ This reports RPC reachability, chain ID, block height, peer count, mining status
 - **Solver:** a separate bridge service with separate configuration and signing key. See [seven-chain-solver](https://github.com/umairkhan2582/seven-chain-solver).
 - **RPC/API:** an access path to node data, not a substitute for independent P2P peers or consensus.
 
-## Docker local node smoke test
+## Independent Node 3 observer full node (non-mining)
 
-`docker/docker-compose.yml` runs one non-mining node for RPC/P2P smoke testing. It does not test validator production, multi-validator consensus, or mainnet decentralization. The checked-in genesis admits one validator, and a running container is not automatically in that validator set. RPC is bound to `127.0.0.1` on the host; only P2P is exposed. Optionally set independent P2P peers in `docker/.env.example`, then run:
+Use the Docker observer path for an independently operated BSC full node that verifies and syncs chain data directly over P2P, without PostgreSQL, the platform API as a block source, simulated blocks, a validator key, or mining. The client must keep its own persistent local chain data. Use peers run by different operators; this makes Node 3 an independent observer/peer, not a validator. See [OBSERVER_SETUP.md](OBSERVER_SETUP.md) for genesis verification, P2P setup, health checks, and the separate validator-promotion requirements.
 
 ```bash
-docker compose --env-file docker/.env.example -f docker/docker-compose.yml up --build
+cp docker/.env.example docker/.env
+# Configure BOOTNODE_ENODES with verified, independently operated P2P peers.
+docker compose --env-file docker/.env -f docker/docker-compose.yml up --build -d
+bash scripts/healthcheck.sh http://127.0.0.1:8545
 ```
 
-The Docker node has no validator signing key. Use the host operator setup above to create an encrypted validator account; consensus participation still depends on the live network rules.
+The Docker Compose host binding keeps RPC on `127.0.0.1`; only P2P is exposed. The first launch initializes a new persistent volume from the checked-in genesis, so verify the live genesis hash before starting. Never delete the volume or replace genesis to attempt validator admission.
 
 ## License
 
