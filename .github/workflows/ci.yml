@@ -11,7 +11,7 @@ jobs:
     name: Lint Shell Scripts
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Install shellcheck
         run: sudo apt-get install -y shellcheck
       - name: Lint shell scripts (errors only)
@@ -25,7 +25,7 @@ jobs:
     name: Validate JSON Files
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Validate JSON
         run: |
           find . -name "*.json" -not -path "*/node_modules/*" | while read f; do
@@ -36,7 +36,7 @@ jobs:
     name: Validate Required Docs
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Check required docs exist
         run: |
           for f in README.md VALIDATOR_SETUP.md ONBOARDING.md SECURITY.md; do
