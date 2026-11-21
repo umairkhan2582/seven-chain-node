@@ -1,234 +1,67 @@
-<div align="center">
+# Seven Chain Validator Node
 
-  <img src="https://theseven.meme/logo.png" width="100" alt="Seven Chain" />
+This repository contains configuration and operator scripts for running the Seven Chain validator client. It downloads the upstream BNB Chain `bsc` executable at a pinned release; it does **not** contain or independently maintain the consensus client source code. Validator operations belong here. Bridge solvers are a separate service and repository.
 
-  # 🔗 seven-chain-node
+## Important network-safety notes
 
-  **Run a Seven Chain Validator — Seal Blocks, Earn SEVEN + BNB Relay Fees**
+- Chain ID: `70007`.
+- `genesis.json` is a reference for a fresh local/test data directory. Do not apply a changed genesis file to an existing node or live network; doing so creates a different chain or risks existing data.
+- The checked-in genesis configuration contains one validator address. This repository does not prove the live validator roster or enable a multi-validator protocol upgrade by itself. Adding validators to an existing network requires consensus-compatible client/protocol support and a coordinated, tested network upgrade that preserves the existing chain history.
+- Do not treat a public RPC endpoint, registration endpoint, dashboard heartbeat, or explorer count as proof that a node is in the consensus validator set.
+- This repository does not provide bridge-solver services, bridge relays, or reward accounting. Do not place solver keys or solver configuration on a validator host.
 
-  [![Chain ID](https://img.shields.io/badge/Chain%20ID-70007-FFD700?style=for-the-badge&logo=ethereum&logoColor=black)](https://theseven.meme/developers)
-  [![Active Validators](https://img.shields.io/badge/Validators-2%2F9%20Active-brightgreen?style=for-the-badge)](https://theseven.meme/blockchain/explorer)
-  [![Mainnet](https://img.shields.io/badge/Status-Mainnet%20Live-brightgreen?style=for-the-badge)](https://theseven.meme/seven-network)
-  [![Version](https://img.shields.io/badge/Version-2.0.1-orange?style=for-the-badge)](https://theseven.meme/become-validator)
-  [![Earn SEVEN](https://img.shields.io/badge/Earn-Block%20Rewards%20+%20Relay%20Fees-orange?style=for-the-badge)](https://theseven.meme/become-validator)
-  [![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](LICENSE)
-  [![GitHub Topic](https://img.shields.io/badge/Topic-seven--chain-yellow?style=for-the-badge)](https://github.com/topics/seven-chain)
+## Install on a fresh operator-managed host
 
-  [**Become a Validator**](https://theseven.meme/become-validator) · [**Block Explorer**](https://theseven.meme/blockchain/explorer) · [**Staking**](https://theseven.meme/staking) · [**Buy SEVEN**](https://theseven.meme/spot/seven) · [**Telegram**](https://t.me/SevenBlockChain)
-
-</div>
-
----
-
-## 🚀 v2.0.1 — May 2026
-
-- **V3 Bridge live** — `0x41A70A6bE222174D8369A90fE91017E8Fb74606f` (non-upgradeable, no admin key)
-- **Dynamic SEVEN price engine** — price moves in real-time on every on-chain trade
-- **Validator reward system active** — block rewards pay 0.0003 SEVEN per block with real user transactions
-- **Relay fee system active** — earn 0.0004 BNB per bridge trade relay
-- **Staking multiplier live** — 1× – 3× earnings based on SEVEN staked
-
----
-
-
-## 🌐 Network Status & Decentralization Update (v2.1.0 — November 2026)
-
-- **Node 2 Activated**: Node 2 (`167.172.215.253`) has officially joined the validator setup and is actively peering and producing blocks alongside Node 1 (`134.209.213.221`).
-- **Decentralization Quorum**: Network consensus is now running on a multi-node architecture (2/9 active validators), advancing towards the target 9-validator threshold.
-- **RPC Hardening**: Public JSON-RPC has been secured to `eth, net, web3` modules only, eliminating administrative and miner exposure.
-- **Direct P2P Peering**: Full bidirectional P2P gossip mesh established between Node 1 and Node 2.
-
-
-## What is a Seven Chain Validator?
-
-Validators are the backbone of Seven Chain (Chain ID **70007**). They seal blocks and earn two streams of income simultaneously: SEVEN block rewards and BNB relay fees from the bridge. Seven Chain is in **early launch phase** — the genesis validator set is still forming. Joining now means lower competition and higher per-block yield.
-
-| Metric | Value |
-|---|---|
-| **SEVEN per block** | 0.0003 SEVEN (blocks with real user transactions) |
-| **BNB per bridge relay** | 0.0004 BNB per settled bridge intent |
-| **Staking multiplier** | 1× – 3× based on SEVEN staked |
-| **Registration** | Fully automatic via heartbeat — no approval needed |
-| **Min server spec** | 2 vCPU · 4 GB RAM · 60 GB SSD · Linux |
-
-### Why Join Now
-
-The earlier you register, the more blocks you seal before the validator set expands. Genesis validators build a track record that compounds: more blocks sealed → more SEVEN earned → more staked → higher multiplier → even more SEVEN per block.
-
----
-
-## How Relay Fees Work
-
-Seven Chain uses a **micro-relay-fee** model — not gas auctions. When a user bridges assets from BNB Chain to Seven Chain:
-
-1. A solver (or your validator node running the solver) detects the pending bridge intent
-2. The solver verifies the source-chain lock on BSC
-3. The solver submits a settlement proof to the V3 bridge contract on Seven Chain
-4. Funds are released to the user
-5. **0.0004 BNB is credited to the solver automatically** — no gas refund claim, no manual withdrawal
-
-Running the [seven-chain-solver](https://github.com/umairkhan2582/seven-chain-solver) alongside your validator node lets you capture both income streams from a single server.
-
----
-
-## Quick Start
+The installer targets Ubuntu and requires root access. Review it before running it.
 
 ```bash
-# 1. Clone
-git clone https://github.com/umairkhan2582/seven-chain-node
+git clone https://github.com/umairkhan2582/seven-chain-node.git
 cd seven-chain-node
-
-# 2. Install
-npm install
-
-# 3. Configure
-cp .env.example .env
-# Set WALLET_ADDRESS and RPC_URL in .env
-
-# 4. Run
-npm start
-# Sends heartbeats every 30s — node registered automatically on first beat
+sudo bash scripts/install.sh
 ```
 
-Your node starts earning as soon as it's live. No approval. No waiting list.
-
-### Docker
+The installer creates `/etc/seven-chain/validator.env.example`, installs the pinned `bsc` binary and configuration, and initializes a data directory only when one is not already present. Configure a validator address and one or more comma-separated P2P bootnodes in the operator-owned environment file. Keep validator key material in the node's local encrypted keystore; the account helper generates the key directly into the encrypted local keystore and prints only the public address:
 
 ```bash
-docker-compose up -d
+sudo cp /etc/seven-chain/validator.env.example /etc/seven-chain/validator.env
+sudo chown root:seven /etc/seven-chain/validator.env
+sudo chmod 640 /etc/seven-chain/validator.env
+sudo bash scripts/create-validator-account.sh
+# Copy the public address printed by the helper into VALIDATOR_ADDRESS.
+sudoedit /etc/seven-chain/validator.env
+sudo systemctl start seven-chain
 ```
 
-The Docker image handles restarts automatically so your node stays online through server reboots.
+The node uses the local RPC listener by default. The installer leaves HTTP/HTTPS firewall ports closed. Keep JSON-RPC private; any public RPC requires a separate security review and explicit firewall/proxy configuration. Never expose admin, debug, account-unlock, or transaction-pool methods publicly. P2P uses TCP/UDP `30303`; multiple independently operated bootstrap peers can be configured with `BOOTNODE_ENODES`.
 
----
-
-## How Block Rewards Work
-
-```
-Every 30 seconds:
-  └─ Your node sends heartbeat → POST /api/node-heartbeat
-
-Each block with a real user transaction:
-  └─ Platform credits 0.0003 SEVEN × your staking multiplier to your validator wallet
-
-Each bridge intent you settle (if running the solver):
-  └─ 0.0004 BNB credited automatically in the settlement transaction
-```
-
-1. Your node sends a heartbeat every 30 seconds to `/api/node-heartbeat`
-2. The platform records your node as active in the validator registry
-3. Every block containing a real user transaction credits **0.0003 SEVEN** to your validator wallet on-chain
-4. Stake SEVEN at [theseven.meme/staking](https://theseven.meme/staking) to multiply your rewards up to **3×**
-5. Run [seven-chain-solver](https://github.com/umairkhan2582/seven-chain-solver) on the same server to also earn **0.0004 BNB** per bridge relay
-
----
-
-## Register Your Node
-
-Registration is **fully automatic** via heartbeat — your first heartbeat registers the node. Alternatively, register manually via API:
+## Verify local node health
 
 ```bash
-curl -X POST https://theseven.meme/api/node-register \
-  -H "Content-Type: application/json" \
-  -d '{
-    "walletAddress": "0xYOUR_WALLET",
-    "rpcUrl": "http://YOUR_SERVER_IP/rpc",
-    "name": "My Validator Node"
-  }'
-# → { "success": true, "message": "Node registered." }
+bash scripts/healthcheck.sh http://127.0.0.1:8545
 ```
 
-No form. No email. No waiting period.
+This reports RPC reachability, chain ID, block height, peer count, mining status, and sync status. A healthy RPC response alone does not prove independent validator production or consensus participation.
 
----
+## Genesis tooling
 
-## Maximize Your Earnings — Staking
+`npm run init-genesis` is only for a new, empty data directory and refuses to initialize over existing chain data. `scripts/build-extradata.js` is a local utility for a new test chain. The unsafe private-key-printing generator was removed; create each validator account locally with `scripts/create-validator-account.sh`. A change to genesis does not upgrade an existing network.
 
-Staking SEVEN multiplies your per-block earnings. The multiplier scales linearly from 1× (no stake) to 3× (maximum stake tier).
+## Separation of duties
 
+- **Validator:** runs the consensus client, stores its own validator keystore, syncs blocks, and participates only if the live consensus rules admit it.
+- **Solver:** a separate bridge service with separate configuration and signing key. See [seven-chain-solver](https://github.com/umairkhan2582/seven-chain-solver).
+- **RPC/API:** an access path to node data, not a substitute for independent P2P peers or consensus.
+
+## Docker local node smoke test
+
+`docker/docker-compose.yml` runs one non-mining node for RPC/P2P smoke testing. It does not test validator production, multi-validator consensus, or mainnet decentralization. The checked-in genesis admits one validator, and a running container is not automatically in that validator set. RPC is bound to `127.0.0.1` on the host; only P2P is exposed. Optionally set independent P2P peers in `docker/.env.example`, then run:
+
+```bash
+docker compose --env-file docker/.env.example -f docker/docker-compose.yml up --build
 ```
-Earnings per block (unstaked):      0.0003 SEVEN
-Earnings per block (max stake 3×):  0.0009 SEVEN
-```
 
-Buy SEVEN → [theseven.meme/spot/seven](https://theseven.meme/spot/seven)
-Stake SEVEN → [theseven.meme/staking](https://theseven.meme/staking)
-
----
-
-## Network Details
-
-| Parameter | Value |
-|---|---|
-| **Network Name** | Seven Chain |
-| **Chain ID** | 70007 |
-| **RPC URL** | `https://theseven.meme/api/seven-chain/jsonrpc` |
-| **Currency Symbol** | SEVEN |
-| **Block Explorer** | https://theseven.meme/blockchain/explorer |
-
----
-
-## Bridge — V3 Contract (Non-Upgradeable)
-
-| Network | Contract Address |
-|---|---|
-| **BNB Chain — source lock** | `0x41A70A6bE222174D8369A90fE91017E8Fb74606f` |
-| **Seven Chain — receiver** | `0x968A78d10C7A8b05822FA4ED2F6ECC46a9102afE` |
-
-The V3 contract has no admin key, no pause function, no upgrade proxy. The bytecode is final. Validators participate in settling bridge intents — run [seven-chain-solver](https://github.com/umairkhan2582/seven-chain-solver) alongside your node to capture bridge relay fees.
-
----
-
-## Server Requirements
-
-| Requirement | Minimum | Recommended |
-|---|---|---|
-| OS | Ubuntu 20.04+ / Debian 11+ | Ubuntu 22.04 LTS |
-| CPU | 2 vCPU | 4 vCPU |
-| RAM | 4 GB | 8 GB |
-| SSD | 60 GB | 100 GB |
-| Network | 100 Mbps | 1 Gbps |
-| Node.js | 20+ | 22 LTS |
-
-Any Linux VPS works — DigitalOcean, Hetzner, AWS, Vultr, or your own bare metal.
-
----
-
-## Seven Chain Ecosystem
-
-| Repo | Description |
-|---|---|
-| [**sevenchain**](https://github.com/umairkhan2582/sevenchain) | Developer hub — network config, Hardhat/Foundry quickstart, API docs |
-| [**seven-chain-node**](https://github.com/umairkhan2582/seven-chain-node) | ← You are here — validator node client |
-| [**seven-chain-solver**](https://github.com/umairkhan2582/seven-chain-solver) | Bridge solver — run alongside this node to earn BNB relay fees |
-| [**seven-creator-kit**](https://github.com/umairkhan2582/seven-creator-kit) | Token launch toolkit — deploy meme tokens, migrate from pump.fun/four.meme |
-| [**seven-gaming-sdk**](https://github.com/umairkhan2582/seven-gaming-sdk) | Gaming SDK — 1s finality on-chain games, session keys, Unreal Engine plugin |
-
-All repositories: [`github.com/topics/seven-chain`](https://github.com/topics/seven-chain)
-
----
-
-## Links
-
-| Resource | URL |
-|---|---|
-| Platform | https://theseven.meme |
-| Become a Validator | https://theseven.meme/become-validator |
-| Staking | https://theseven.meme/staking |
-| Buy SEVEN | https://theseven.meme/spot/seven |
-| Block Explorer | https://theseven.meme/blockchain/explorer |
-| Bridge | https://theseven.meme/bridge |
-| Developer Hub | https://theseven.meme/developers |
-| Whitepaper | https://theseven.meme/whitepaper |
-| Telegram | https://t.me/SevenBlockChain |
-| Twitter / X | [@thesevendotmeme](https://x.com/thesevendotmeme) |
-
----
+The Docker node has no validator signing key. Use the host operator setup above to create an encrypted validator account; consensus participation still depends on the live network rules.
 
 ## License
 
 MIT
-
-
-## 💎 Genesis Allocation & Supply Invariance
-Seven Chain mainnet operates on Chain ID 70007 with a fixed genesis supply of **777,000,010 SEVEN** (777M Treasury/Ecosystem + 10 Genesis Validator). Adding validator nodes (including Node 2 through Node 9) syncs the verified block history without modifying or inflating the genesis token allocations. Validators secure the decentralized consensus and earn transaction fees.

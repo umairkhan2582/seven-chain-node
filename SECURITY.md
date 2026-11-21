@@ -1,60 +1,23 @@
 # Security Policy
 
-> Updated: May 20, 2026
+## Reporting
 
-## Supported Versions
+Do not open a public issue for a security vulnerability. Contact the maintainers privately at `support@theseven.meme` with a concise description and reproduction details that do not include secrets or live user data.
 
-| Version | Supported |
-|---------|-----------|
-| 2.x     | Yes       |
-| 1.x     | Yes       |
-| < 1.0   | No        |
+## Validator key handling
 
-## Reporting a Vulnerability
+- Generate validator accounts on the validator host with `scripts/create-validator-account.sh`; the private key stays in the node's encrypted keystore.
+- Do not print, paste, email, commit, or pass private keys as command-line arguments or environment variables.
+- Keep the keystore password readable only by the dedicated `seven` service account. Use separate keys and hosts/accounts for validators and bridge solvers.
+- If any key value was committed or pasted into chat, treat it as compromised and rotate it through the appropriate protocol process.
 
-**Do NOT open a public GitHub issue for security vulnerabilities.**
+## Network and RPC exposure
 
-Email: **support@theseven.meme**
-Subject: `SECURITY: [brief description]`
-
-Response: within 24 hours. Critical patches: within 7 days.
+- The installer preserves existing UFW rules, opens P2P port `30303` TCP/UDP, and leaves RPC ports closed by default.
+- Keep JSON-RPC bound to loopback unless a separate security review authorizes a restricted proxy. Never expose `admin`, `debug`, `personal`, account-unlock, or transaction-pool methods.
+- Run validator and solver processes separately. A heartbeat, registration API, RPC response, peer count, or block-height snapshot is not proof of validator-set membership or block production.
+- The checked-in genesis is a reference configuration for a fresh chain and contains one validator address. This repository does not prove the live validator roster or supply a multi-validator upgrade. Adding validators to an existing network requires consensus-compatible code and a coordinated, tested upgrade.
 
 ## Scope
 
-| In Scope | Out of Scope |
-|----------|--------------|
-| Validator RPC exposure | Social engineering |
-| Bridge contract bugs | Third-party wallet bugs |
-| Staking contract exploits | Cloud provider infra |
-| P2P consensus attacks | Already-public issues |
-
-## Bridge Contract (Immutable)
-
-- **SevenBridgeLock v3**: `0x41A70A6bE222174D8369A90fE91017E8Fb74606f` (BSC Mainnet)
-- No admin key. No pause. No upgrade proxy. Final bytecode.
-
-## Validator Security Checklist
-
-```bash
-# Protect keystore
-chmod 600 ~/seven-chain-data/keystore/*
-chmod 600 ~/seven-chain-data/password.txt
-
-# Minimal firewall
-sudo ufw default deny incoming
-sudo ufw allow 22/tcp
-sudo ufw allow 8545/tcp
-sudo ufw allow 30303/tcp
-sudo ufw enable
-
-# Only expose safe RPC modules publicly
-# config.toml: HTTPModules = ["eth","net","web3"]
-```
-
-## Contact
-
-| Channel | Link |
-|---------|------|
-| Security | support@theseven.meme |
-| Telegram | t.me/thesevenmeme |
-| Staking | theseven.meme/staking |
+This repository provides operator scripts and configuration around an upstream BSC client binary. It does not itself audit the client, bridge contracts, token supply, or live chain state. Report issues in this repository's scripts/configuration privately.

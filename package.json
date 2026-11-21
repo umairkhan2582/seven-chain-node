@@ -1,15 +1,15 @@
 {
   "name": "seven-chain-node",
   "version": "2.0.0",
-  "description": "Seven Chain validator node — Chain ID 70007. Stake SEVEN + earn at theseven.meme/staking",
+  "description": "Seven Chain validator node operations \u2014 Chain ID 70007",
   "private": true,
   "scripts": {
-    "start":           "node src/node.js",
-    "init-genesis":    "node scripts/init-genesis.js",
-    "heartbeat":       "node scripts/heartbeat.js",
-    "generate-keys":   "node scripts/generate-keys.js",
+    "start": "bash scripts/start-validator.sh",
+    "init-genesis": "bash scripts/init-genesis.sh",
+    "healthcheck": "bash scripts/healthcheck.sh",
     "build-extradata": "node scripts/build-extradata.js",
-    "register":        "echo Register at https://theseven.meme/staking"
+    "create-account": "bash scripts/create-validator-account.sh",
+    "import-key": "bash scripts/import-key.sh"
   },
   "dependencies": {
     "ethers": "^6.17.0"
@@ -17,8 +17,13 @@
   "engines": {
     "node": ">=18.0.0"
   },
-  "keywords": ["seven-chain","validator","staking","bsc","parlia","blockchain"],
-  "homepage": "https://theseven.meme/staking",
+  "keywords": [
+    "seven-chain",
+    "validator",
+    "bsc",
+    "parlia",
+    "blockchain"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/umairkhan2582/seven-chain-node.git"

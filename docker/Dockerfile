@@ -1,46 +1,32 @@
 FROM ubuntu:22.04
 
 ARG BSC_VERSION=v1.4.10
-
 ENV DEBIAN_FRONTEND=noninteractive
 ENV DATA_DIR=/data/seven-chain
 
-RUN apt-get update && apt-get install -y \
-    curl wget ca-certificates \
-    && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ca-certificates curl \
+    && rm -rf /var/lib/apt/lists/* \
+    && useradd --system --home-dir /data/seven-chain --shell /usr/sbin/nologin seven
 
-# Download BSC binary
-RUN wget -q -O /usr/local/bin/bsc \
+RUN curl -fsSL \
     "https://github.com/bnb-chain/bsc/releases/download/${BSC_VERSION}/geth_linux" \
-    && chmod +x /usr/local/bin/bsc
+    -o /usr/local/bin/bsc \
+    && chmod 0755 /usr/local/bin/bsc
 
-# Create data directory
-RUN mkdir -p ${DATA_DIR}/logs
+RUN mkdir -p /data/seven-chain/geth /data/seven-chain/keystore \
+    && chown -R seven:seven /data/seven-chain
 
-# Copy config files
-COPY genesis.json ${DATA_DIR}/genesis.json
-COPY config.toml  ${DATA_DIR}/config.toml
+COPY genesis.json /data/seven-chain/genesis.json
+COPY config.toml /data/seven-chain/config.toml
+COPY docker/entrypoint.sh /usr/local/bin/seven-chain-entrypoint
+RUN chmod 0755 /usr/local/bin/seven-chain-entrypoint
 
-# Initialize chain from genesis
-RUN bsc init --datadir ${DATA_DIR} ${DATA_DIR}/genesis.json
-
-EXPOSE 8545 8546 30303 30303/udp
-
-ENV VALIDATOR_ADDRESS=""
-ENV BOOTNODE_ENODE=""
-
-HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
-  CMD curl -sf -X POST -H "Content-Type: application/json" \
+USER seven
+EXPOSE 8545/tcp 30303/tcp 30303/udp
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+  CMD curl -fsS -X POST -H "Content-Type: application/json" \
     --data '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1}' \
-    http://localhost:8545 || exit 1
+    http://127.0.0.1:8545 || exit 1
 
-ENTRYPOINT ["/bin/sh", "-c"]
-CMD ["bsc \
-  --config ${DATA_DIR}/config.toml \
-  --datadir ${DATA_DIR} \
-  --unlock ${VALIDATOR_ADDRESS} \
-  --password /run/secrets/keystore_pass \
-  --mine \
-  --bootnodes ${BOOTNODE_ENODE} \
-  --networkid 70007 \
-  --verbosity 3"]
+ENTRYPOINT ["/usr/local/bin/seven-chain-entrypoint"]

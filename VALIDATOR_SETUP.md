@@ -1,236 +1,50 @@
-# Seven Chain — Validator Node Setup Guide
+# Seven Chain Validator Operator Setup
 
-> **Updated: May 20, 2026**
+This guide is for the validator node only. It does not install a bridge solver and does not register a node through a platform heartbeat.
 
-Complete step-by-step guide to running a Seven Chain validator node on Ubuntu 22.04 / 24.04.
+## Before operating
 
----
+1. Confirm the node binary/version, chain ID, genesis hash, and P2P peers with the network maintainers through independently verifiable sources.
+2. Do not change `genesis.json` or reinitialize an existing data directory. A fresh genesis is a different chain.
+3. The checked-in genesis lists one validator address. Additional validators on an existing network require consensus-compatible validator-set support and a coordinated network upgrade. This repository alone cannot add validators to the live set.
+4. Keep the validator signing key in the local encrypted keystore. Never pass it on a command line, put it in a config file, or commit it.
 
-## Before You Start
+## Install
 
-Get SEVEN tokens first:
-
-| Action | URL |
-|--------|-----|
-| Buy SEVEN with sUSDT | **[theseven.meme/spot/seven](https://theseven.meme/spot/seven)** |
-| Bridge USDT from BNB Chain | **[theseven.meme/bridge](https://theseven.meme/bridge)** |
-| Stake + Register Validator | **[theseven.meme/staking](https://theseven.meme/staking)** |
-
-> BRONZE tier = 0 SEVEN. Free to start. Upgrade tier anytime.
-
----
-
-## Validator Tiers
-
-| Tier | Min Stake | APR | Block Priority |
-|------|-----------|-----|----------------|
-| BRONZE  | 0 SEVEN      | 8%/yr  | Standard |
-| SILVER  | 5,000 SEVEN  | 12%/yr | Medium   |
-| GOLD    | 10,000 SEVEN | 18%/yr | High     |
-| DIAMOND | 50,000 SEVEN | 25%/yr | Maximum  |
-
----
-
-## System Requirements
-
-| Component | Minimum | Recommended |
-|-----------|---------|-------------|
-| OS | Ubuntu 22.04 LTS | Ubuntu 24.04 LTS |
-| CPU | 2 vCPUs | 4+ vCPUs |
-| RAM | 4 GB | 8 GB |
-| Disk | 50 GB SSD | 200 GB NVMe |
-| Bandwidth | 25 Mbps | 100 Mbps |
-| **Open ports** | **8545 (RPC)** | 8545 + 30303 |
-
-> Port 8545 **must** be publicly reachable — the platform pings it to activate your node.
-
----
-
-## 1. Server Setup
-
-```bash
-sudo apt update && sudo apt upgrade -y
-sudo apt install -y curl git ufw
-
-sudo ufw allow 22/tcp    # SSH
-sudo ufw allow 8545/tcp  # Public RPC — required
-sudo ufw allow 30303/tcp # P2P — optional
-sudo ufw enable
-```
-
----
-
-## 2. Install Node.js 20
-
-```bash
-curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
-sudo apt-get install -y nodejs
-node --version   # v20.x
-```
-
----
-
-## 3. Clone and Install
+On a supported Ubuntu host, review and run:
 
 ```bash
 git clone https://github.com/umairkhan2582/seven-chain-node.git
 cd seven-chain-node
-npm install
+sudo bash scripts/install.sh
 ```
 
----
+The installer pins the upstream `bsc` release and creates the node data/config paths. It initializes only a fresh data directory. Existing chain data is preserved.
 
-## 4. Configure
+## Create the local validator account
+
+Copy the generated sample settings and set the public validator address plus one or more P2P bootnode URLs:
 
 ```bash
-cp config.toml config.local.toml
-nano config.local.toml
+sudo cp /etc/seven-chain/validator.env.example /etc/seven-chain/validator.env
+sudo chown root:seven /etc/seven-chain/validator.env
+sudo chmod 640 /etc/seven-chain/validator.env
+sudo bash scripts/create-validator-account.sh
+sudoedit /etc/seven-chain/validator.env  # enter the public address printed by the helper
 ```
 
-Key change — expose RPC so the platform can ping you:
+The account helper generates a key directly into the node's encrypted keystore and prints only the public address. It never prints the private key or accepts one as an argument. Use separate keys for validators and solvers.
 
-```toml
-[Node]
-HTTPHost = "0.0.0.0"   # NOT 127.0.0.1
-HTTPPort = 8545
-```
-
----
-
-## 5. Initialize Genesis
+## Start and verify
 
 ```bash
-npm run init-genesis
-# Expected: INFO Successfully wrote genesis state (chain 70007)
+sudo systemctl start seven-chain
+sudo systemctl status seven-chain --no-pager
+bash scripts/healthcheck.sh http://127.0.0.1:8545
 ```
 
----
+The default RPC listener is local-only. The installer leaves HTTP/HTTPS firewall ports closed. Keep JSON-RPC private; any public RPC requires a separate security review and explicit firewall/proxy configuration. Do not expose account unlock, admin, debug, or txpool modules. The P2P port is `30303` TCP and UDP.
 
-## 6. Start Node
+## Do not infer consensus from monitoring
 
-```bash
-npm start &
-
-# Verify chain ID
-curl -s http://localhost:8545 -X POST \
-  -H "Content-Type: application/json" \
-  -d '{"jsonrpc":"2.0","method":"eth_chainId","params":[],"id":1}'
-# Expected: {"result":"0x1117f"}  (0x1117f = 70007) OK
-
-# Test public reachability
-curl -s http://YOUR_SERVER_IP:8545 -X POST \
-  -H "Content-Type: application/json" \
-  -d '{"jsonrpc":"2.0","method":"net_version","params":[],"id":1}'
-# Expected: {"result":"70007"}
-```
-
----
-
-## 7. Register as Validator — Self-Service, No Approval
-
-1. Go to **[theseven.meme/staking](https://theseven.meme/staking)**
-2. Connect wallet
-3. Register your node RPC URL (No SEVEN stake required)
-4. Enter **Node RPC URL**: `http://YOUR_SERVER_IP:8545`
-5. Click **Stake & Register**
-
-Platform immediately:
-- Stakes your SEVEN
-- Auto-registers your node
-- Pings your RPC (eth_chainId must return 70007)
-- Sets status → **ACTIVE**
-
-**No email. No admin. Instant.**
-
----
-
-## 8. Heartbeat Service
-
-Keeps your node active — send heartbeat every 30 seconds:
-
-```bash
-sudo tee /etc/systemd/system/seven-heartbeat.service > /dev/null << EOF
-[Unit]
-Description=Seven Chain Validator Heartbeat
-After=network.target
-
-[Service]
-WorkingDirectory=/root/seven-chain-node
-ExecStart=npm run heartbeat -- --wallet 0xYOUR_WALLET --rpc http://YOUR_IP:8545
-Restart=always
-RestartSec=10
-
-[Install]
-WantedBy=multi-user.target
-EOF
-
-systemctl daemon-reload
-systemctl enable --now seven-heartbeat
-```
-
-Heartbeat endpoint:
-```
-POST https://theseven.meme/api/node-heartbeat
-{"walletAddress":"0xYOUR_WALLET","rpcUrl":"http://YOUR_IP:8545","nodeVersion":"1.0.0"}
-```
-
----
-
-## 9. Node as systemd Service
-
-```bash
-sudo tee /etc/systemd/system/seven-chain.service > /dev/null << EOF
-[Unit]
-Description=Seven Chain Validator Node
-After=network-online.target
-
-[Service]
-WorkingDirectory=/root/seven-chain-node
-ExecStart=npm start
-Restart=always
-RestartSec=5
-LimitNOFILE=65536
-
-[Install]
-WantedBy=multi-user.target
-EOF
-
-systemctl daemon-reload
-systemctl enable --now seven-chain
-journalctl -u seven-chain -f
-```
-
----
-
-## 10. Verify
-
-```bash
-systemctl is-active seven-chain        # active
-systemctl is-active seven-heartbeat    # active
-curl "https://theseven.meme/api/validators/0xYOUR_WALLET" | python3 -m json.tool
-```
-
----
-
-## Earnings
-
-| Stream | How | Example |
-|--------|-----|---------|
-| Block rewards | Per block your node seals | Continuous |
-| Relay fees | 0.0004 BNB per bridged trade | 100 trades/day = 0.04 BNB |
-| Staking APR | 8-25%/yr on staked SEVEN | 50k SEVEN x 25% = 12,500/yr |
-
----
-
-## Troubleshooting
-
-| Problem | Fix |
-|---------|-----|
-| Port 8545 unreachable | `sudo ufw allow 8545/tcp && sudo ufw reload` |
-| Wrong chain ID | Re-run `npm run init-genesis` |
-| Status stuck on "approved" | Confirm 8545 reachable from public internet |
-| No sUSDT | Bridge at [theseven.meme/bridge](https://theseven.meme/bridge) |
-
----
-
-*Updated May 20, 2026 — Seven Chain Validator Team*
+Heartbeats and registration APIs are monitoring/indexing mechanisms, not consensus. A node is a consensus validator only when the running client, active chain rules, and on-chain/network validator set agree. Block-height or peer-count snapshots alone do not prove that a node authored blocks.

@@ -56,3 +56,8 @@
   chaindata/
   geth/
   
+# Local node/Docker credentials and runtime data
+/docker/.env
+/docker/secrets/
+/validator-keys/
+/data/

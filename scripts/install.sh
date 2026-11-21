@@ -51,8 +51,16 @@ echo "[5/8] Installing Seven Chain configuration..."
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
 
-cp "${REPO_DIR}/genesis.json" "${DATA_DIR}/genesis.json"
-cp "${REPO_DIR}/config.toml" "${DATA_DIR}/config.toml"
+if [[ ! -f "${DATA_DIR}/genesis.json" ]]; then
+  cp "${REPO_DIR}/genesis.json" "${DATA_DIR}/genesis.json"
+else
+  echo "  Existing genesis file preserved."
+fi
+if [[ ! -f "${DATA_DIR}/config.toml" ]]; then
+  cp "${REPO_DIR}/config.toml" "${DATA_DIR}/config.toml"
+else
+  echo "  Existing node configuration preserved."
+fi
 
 # ── 6. Initialize chain data from genesis ───────────────────────
 echo "[6/8] Initializing chain data from genesis block..."
@@ -66,17 +74,20 @@ else
 fi
 
 # ── 7. Set up firewall rules ─────────────────────────────────────
-echo "[7/8] Configuring firewall..."
-ufw --force reset
-ufw default deny incoming
-ufw default allow outgoing
+echo "[7/8] Configuring firewall without resetting existing rules..."
+if ! ufw status | grep -q "Status: active"; then
+  ufw default deny incoming
+  ufw default allow outgoing
+fi
 ufw allow ssh
-ufw allow 30303/tcp   # P2P
-ufw allow 30303/udp   # P2P UDP
-ufw allow 80/tcp      # HTTP (for Certbot)
-ufw allow 443/tcp     # HTTPS (public RPC via Nginx)
+ufw allow 30303/tcp  # P2P
+ufw allow 30303/udp  # P2P UDP
+# RPC is loopback-only; HTTP/HTTPS are not opened by this installer.
 ufw --force enable
-echo "  Firewall configured."
+echo "  Firewall configured. JSON-RPC remains private by default."
+
+# Install the repository launcher used by systemd.
+install -m 0755 "${REPO_DIR}/scripts/start-validator.sh" /usr/local/bin/seven-chain-start
 
 # ── 8. Create systemd service ────────────────────────────────────
 echo "[8/8] Creating systemd service..."
@@ -92,14 +103,7 @@ User=${SERVICE_USER}
 Group=${SERVICE_USER}
 WorkingDirectory=${DATA_DIR}
 EnvironmentFile=-/etc/seven-chain/validator.env
-ExecStart=/usr/local/bin/bsc \\
-  --config ${DATA_DIR}/config.toml \\
-  --datadir ${DATA_DIR} \\
-  --unlock \${VALIDATOR_ADDRESS} \\
-  --password /etc/seven-chain/keystore.pass \\
-  --mine \\
-  --bootnodes \${BOOTNODE_ENODE} \\
-  --networkid 70007
+ExecStart=/usr/local/bin/seven-chain-start
 Restart=on-failure
 RestartSec=10
 LimitNOFILE=65536
@@ -115,26 +119,21 @@ mkdir -p /etc/seven-chain
 cat > /etc/seven-chain/validator.env.example << 'EOF'
 # Copy to /etc/seven-chain/validator.env and fill in values
 VALIDATOR_ADDRESS=0xYOUR_VALIDATOR_ADDRESS
-BOOTNODE_ENODE=enode://BOOTNODE_PUBKEY@BOOTNODE_IP:30303
+# Comma-separated independent P2P bootnodes. Configure your own verified peers.
+BOOTNODE_ENODES=enode://BOOTNODE_PUBKEY_1@BOOTNODE_HOST_1:30303,enode://BOOTNODE_PUBKEY_2@BOOTNODE_HOST_2:30303
 EOF
+chown root:seven /etc/seven-chain/validator.env.example
+chmod 0640 /etc/seven-chain/validator.env.example
 
 systemctl daemon-reload
 systemctl enable seven-chain
 echo "  Service created. NOT started yet — configure validator.env first."
 
 echo ""
-echo "╔══════════════════════════════════════════════════════════╗"
-echo "║  Installation complete!                                  ║"
-echo "╠══════════════════════════════════════════════════════════╣"
-echo "║  Next steps:                                             ║"
-echo "║  1. Import validator keystore:                           ║"
-echo "║     bash scripts/import-key.sh YOUR_PRIVATE_KEY         ║"
-echo "║  2. Configure /etc/seven-chain/validator.env            ║"
-echo "║  3. Set up Nginx RPC proxy:                              ║"
-echo "║     bash scripts/setup-nginx.sh your-node.example.com   ║"
-echo "║  4. Start the node:                                      ║"
-echo "║     systemctl start seven-chain                          ║"
-echo "║  5. Check status:                                        ║"
-echo "║     bash scripts/healthcheck.sh                          ║"
-echo "╚══════════════════════════════════════════════════════════╝"
+echo "Next steps:"
+echo "  1. Copy /etc/seven-chain/validator.env.example to validator.env."
+echo "  2. Create the encrypted local account: sudo bash scripts/create-validator-account.sh"
+echo "  3. Set the printed public address in validator.env and configure P2P peers."
+echo "  4. Start the node: sudo systemctl start seven-chain"
+echo "  5. Keep JSON-RPC private; the installer does not open HTTP/HTTPS ports."
 echo ""
